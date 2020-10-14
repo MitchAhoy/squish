@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../../context/user.context'
+import React from 'react'
 import { Toolbar, AppBar, Typography, Button, makeStyles } from '@material-ui/core'
 import { BugReport as BugReportIcon } from '@material-ui/icons'
 import Login from './Login'
+import NavProfile from './NavProfile'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
 
     const classes = useStyles()
-    const { user } = useContext(UserContext)
+
     return (
          <AppBar className={classes.root}>
              <Toolbar variant='dense' className={classes.toolbar}>
                 <Button className={classes.button}>
-                    <BugReportIcon color='inherit' /> <Typography variant='h6' component='h1' color='inherit'>SQUISHED</Typography>
+                    <BugReportIcon color='inherit' /> <Typography variant='h6' component='h1' color='inherit'>SQUISH</Typography>
                 </Button>
-                <Login />
+                {user ? <NavProfile img={user.profileImage} name={`${user.firstName} ${user.lastName}`} /> : <Login />}
              </Toolbar>
         </AppBar>
     )

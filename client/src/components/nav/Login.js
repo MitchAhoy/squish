@@ -15,8 +15,8 @@ const LoginButton = () => {
     const toggleModal = () => setOpen(!open)
 
     return (
-        <div>
-        <Button variant='contained' color='inherit' className={classes.root} onClick={toggleModal}>Login</Button>
+        <div onClick={toggleModal}>
+        <Button variant='contained' color='inherit' className={classes.root}>Login</Button>
         {open && <SignInModal open={open} toggleModal={toggleModal}/>}
         </div>
     )
