@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const FormInput = ({fields, handleFormInput, formData}) => {
 
 	const classes = useStyles()
-	const renderFields = fields.map(({ label, inputFor, type, value }) => {
+	const renderFields = fields.map(({ label, inputFor, type }) => {
 		switch (type) {
 			case 'text':
 				return (
