@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 		textDecoration: 'none'
 	}
 }))
-// project: { projectCreatedOn, projectCreator, projectDescription, projectName } 
+
 const ProjectCard = ({ project }) => {
 
     const classes = useStyles()

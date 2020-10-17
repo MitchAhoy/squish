@@ -9,8 +9,8 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const req = await axios.get('/api/init_session')
-                if (req.data) setUser(req.data.user)
+                const req = await axios.get('/api/current_user')
+                if (req.data) setUser(req.data)
             } catch (err) {
                 console.log(err)
             }

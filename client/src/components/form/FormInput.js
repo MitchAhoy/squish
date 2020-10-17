@@ -12,6 +12,7 @@ import {
 	InputLabel,
 	InputAdornment
 } from '@material-ui/core'
+import { KeyboardDatePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-const FormInput = ({fields, handleFormInput, formData}) => {
+const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormData}) => {
 
 	const classes = useStyles()
 	const renderFields = fields.map(({ label, inputFor, type }) => {
@@ -77,6 +78,45 @@ const FormInput = ({fields, handleFormInput, formData}) => {
 						onChange={handleFormInput}
 					/>
 				)
+			case 'select-priority':
+				const priorities = ['Low', 'Normal', 'High', 'Urgent']
+				return (
+							<FormControl
+								variant='outlined'
+								className={classes.formInput}
+							>
+								<InputLabel id={inputFor}>{label}</InputLabel>
+								<Select
+									labelId={`${inputFor}-label`}
+									id={`${inputFor}-select`}
+									label={label}
+									onChange={handleFormInput}
+									name={inputFor}
+									required
+									
+								>
+									{priorities.map((priority) => (
+										<MenuItem key={priority} value={priority}>
+											{priority}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+				)
+				case 'select-date':
+					return (
+						<KeyboardDatePicker
+							className={classes.formInput}
+							label={label}
+							placeholder='2018/10/10'
+							format='yyyy/MM/dd'
+							value={formData.taskDueDate ? formData.taskDueDate : new Date().setDate(new Date().getDate() + 1)}
+							inputVariant='outlined'
+							onChange={(date) => handleDateInput(inputFor, date)}
+							disablePast={true}
+							autoOk={true}
+						/>
+					)
 			default:
 				return 'unidentified input'
 		}
