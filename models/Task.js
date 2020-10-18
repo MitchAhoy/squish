@@ -7,9 +7,9 @@ const taskSchema = new Schema({
     taskAssignee: String,
     taskPriority: String,
     taskDueDate: Date,
-    taskTags: [String],
     taskOrganisation: String,
-    taskProject: String
+    taskProject: String,
+    taskStatus: String
 })
 
 mongoose.model('task', taskSchema)

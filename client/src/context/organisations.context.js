@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const OrganisationsContext = createContext()
 
-export const OrganisationsContextProvider = ( { children }) => {
+export const OrganisationsContextProvider = ({ children }) => {
     const initState = []
 
     const organisationsReducer = (state, action) => {
@@ -20,18 +20,16 @@ export const OrganisationsContextProvider = ( { children }) => {
     useEffect(() => {
         const initFetch = async () => {
             try {
-                const req = await axios.get('api/fetch_organisations')
-                organisationsDispatch({action: 'FETCH_SUCCESS', payload: req.data})
-                console.log(req)
+                const req = await axios.get('/api/fetch_organisations')
+                organisationsDispatch({type: 'FETCH_SUCCESS', payload: req.data})
             } catch (err) {
-                organisationsDispatch({action: 'FETCH_ERROR', payload: err})
+                organisationsDispatch({type: 'FETCH_ERROR', payload: err})
             }
         }
         initFetch()
-    })
+    }, [])
 
     const [organisations, organisationsDispatch] = useReducer(organisationsReducer, initState)
-    
 
     return (
         <OrganisationsContext.Provider value={{organisations, organisationsDispatch}}>

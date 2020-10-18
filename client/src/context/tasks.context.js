@@ -30,7 +30,6 @@ export const TasksContextProvider = ({ children }) => {
         }
         initFetch()
     }, [])
-    console.log(tasks)
 
     return (
         <TasksContext.Provider value={{tasks, tasksDispatch}}>

@@ -4,15 +4,16 @@ const requireLogin = require('../middleware/requireLogin')
 
 module.exports = (app) => {
     app.post('/api/create_project', requireLogin, async (req, res) => {
-        const { projectName, projectDescription, projectUsers} = req.body
-        const parsedUsers = projectUsers.split(',').filter(el => el.length > 0).map(el => el.replace(/ /g, '')).concat([req.user._id])
+        const { projectName, projectDescription, projectUsers, projectOrganisation} = req.body
+        const parsedUsers = projectUsers.split(',').filter(el => el.length > 0).map(el => el.replace(/ /g, '')).concat([req.user.email])
         try {
             const project = await new Project({
                 projectName,
                 projectDescription,
                 projectUsers: parsedUsers,
                 projectCreator: req.user.email,
-                projectCreatedOn: new Date()
+                projectCreatedOn: new Date(),
+                projectOrganisation
             }).save()
             res.send(project)
             return

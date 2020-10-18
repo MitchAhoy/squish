@@ -19,16 +19,17 @@ module.exports = (app) => {
     app.post('/api/create_task', requireLogin, async (req, res) => {
 
         try {
-            const { taskName, taskDescription, taskAssignee, taskPriority, taskDueDate, taskTags } = req.body
-            const parsedTags = taskTags.split(',').filter(el => el.length > 0) || taskTags
+            const { taskName, taskDescription, taskAssignee, taskPriority, taskDueDate, taskOrganisation, taskProject } = req.body
             const task = await new Task({
                 taskName,
                 taskDescription,
                 taskAssignee,
                 taskPriority,
                 taskDueDate,
-                taskTags: parsedTags,
-                taskCreatedBy: req.user._id
+                taskCreatedBy: req.user._id,
+                taskStatus: 'open',
+                taskOrganisation,
+                taskProject
             }).save()
             res.send(task)
         } catch (err) {

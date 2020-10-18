@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-const Form = ({ match: {params: {formFor}}}) => {
+const Form = ({ history, match: {params: {formFor}}}) => {
 
     const classes = useStyles()
     const { fields, cta, submitBtn, submit } = formInfo[formFor]
