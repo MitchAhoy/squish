@@ -6,7 +6,8 @@ const projectSchema = new Schema({
     projectDescription: String,
     projectUsers: [String],
     projectCreator: String,
-    projectCreatedOn: Date
+    projectCreatedOn: Date,
+    projectOrganisation: String
 })
 
 mongoose.model('project', projectSchema)

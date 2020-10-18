@@ -1,18 +1,21 @@
 import React from 'react'
 import { UserContextProvider } from './user.context'
 import { ProjectsContextProvider } from './projects.context'
-// import { LoadingContextProvider } from './loading.context'
+import { OrganisationsContextProvider } from './organisations.context'
+import { TasksContextProvider } from './tasks.context'
 
 const BundledContext = ({ children }) => {
 
     return (
-        // <LoadingContextProvider>
+        <OrganisationsContextProvider>
             <UserContextProvider>
                 <ProjectsContextProvider>
-                    {children}
+                    <TasksContextProvider>
+                        {children}
+                    </TasksContextProvider>
                 </ProjectsContextProvider>
             </UserContextProvider>
-        // </LoadingContextProvider>
+        </OrganisationsContextProvider>
     )
 }
 

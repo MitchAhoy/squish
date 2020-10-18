@@ -1,6 +1,23 @@
 import axios from 'axios'
 
 const formInfo = {
+    organisation: {
+        title: 'Add An Organisation',
+        fields: [
+            { label: 'Organisation Name', inputFor: 'organisationName', type: 'text', value: '' },
+            { label: 'Add Users', inputFor: 'organisationUsers', type: 'text', value: '' },
+        ],
+        cta: 'Add Organisation',
+        submitBtn: 'Add Organisation',
+        submit: async (formData) => {
+            try {
+                const response = await axios.post('/api/create_organisation', formData)
+                return response
+            } catch (err) {
+                throw new Error(err)
+            }
+        }
+    },
     project: {
         title: 'Create Project',
         fields: [
@@ -22,6 +39,7 @@ const formInfo = {
     task: {
         title: 'Create Task',
         fields: [
+            { label: 'Project', inputFor: 'taskProject', type: 'select-project', value: '' },
             { label: 'Task Name', inputFor: 'taskName', type: 'text', value: '' },
             { label: 'Description', inputFor: 'taskDescription', type: 'text', value: '' },
             { label: 'Assign To', inputFor: 'taskAssignee', type: 'text', value: '' },

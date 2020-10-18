@@ -1,4 +1,4 @@
-import React, { createContext, useState, useReducer, useEffect } from 'react'
+import React, { createContext, useReducer, useEffect } from 'react'
 import axios from 'axios'
 
 export const ProjectsContext = createContext()

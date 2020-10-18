@@ -6,9 +6,13 @@ module.exports = (app) => {
 
     app.get('/api/fetch_tasks', requireLogin, async (req, res) => {
         try {
-            const tasks = await Task.find({})
+            const tasks = await Task.find()
+            res.send(tasks)
         } catch (err) {
-
+            console.log(err)
+			res.status(400)
+			res.send({ error: err })
+			return
         }
     })
 
@@ -26,7 +30,6 @@ module.exports = (app) => {
                 taskTags: parsedTags,
                 taskCreatedBy: req.user._id
             }).save()
-
             res.send(task)
         } catch (err) {
             console.log(err)
