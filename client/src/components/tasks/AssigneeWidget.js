@@ -1,5 +1,5 @@
-import React from 'react'
-import { FormControl, Select, MenuItem, InputLabel, makeStyles, Avatar } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Popover, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
 	formInput: {
@@ -9,27 +9,47 @@ const useStyles = makeStyles((theme) => ({
 
 const AssigneeWidget = ({ currentUser, organisationalUsers }) => {
     const classes = useStyles()
+    const [anchorEl, setAnchorEl] = useState(null);
 
-    
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget)
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null)
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'assignee-popover' : undefined
+
     return (
-        <FormControl
-        variant='outlined'
-        className={classes.formInput}
-    >
-        <InputLabel id='assignee'>Assignee</InputLabel>
-        <Select
-            labelId='assignee-label'
-            id='assignee-id'
-            label='assignee-select-label'
-        >
-            
-        <MenuItem><Avatar>N</Avatar>nghfh@gmail.com</MenuItem>
-        <MenuItem><Avatar>M</Avatar>mifdfhjs@gmail.com</MenuItem>
-        <MenuItem><Avatar>M</Avatar>msjufsidf@gmail.com</MenuItem>
-        <MenuItem><Avatar>T</Avatar>tjikonf@gmail.com</MenuItem>
-        </Select>
-    </FormControl>
+        <div>
+            <IconButton onClick={handleClick} className={classes.chip}>
+                <Avatar>N</Avatar>
+            </IconButton>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                {organisationalUsers.map(({ email }) => (
+                    <MenuItem onClick={handleClose} key={email}>
+                        <Avatar>{email[0]}</Avatar>
+                    </MenuItem>
+                ))}
+            </Popover>
+        </div>
     )
 }
+
 
 export default AssigneeWidget
