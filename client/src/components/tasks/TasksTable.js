@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, makeStyles, Button, Paper, Container } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { TasksContext } from '../../context/tasks.context'
-import StatusChip from './StatusChip'
+import StatusWidget from './StatusWidget'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,7 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
                                     <TableCell>{taskDueDate}</TableCell>
                                     <TableCell>{taskAssignee}</TableCell>
                                     <TableCell>{taskPriority}</TableCell>
-                                    <TableCell><StatusChip status={taskStatus} /></TableCell>
+                                    <TableCell><StatusWidget status={taskStatus} /></TableCell>
                                     <TableCell><Link className={classes.linkCell} to={`/project/${projectId}/task/${_id}`}><Button variant='contained' color='secondary'>More</Button></Link></TableCell>
                                 </TableRow>
                             )

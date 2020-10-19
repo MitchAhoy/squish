@@ -26,6 +26,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 require('./routes/authRoutes')(app)
+// require('./routes/appUsersRoutes')(app)
 require('./routes/projectRoutes')(app)
 require('./routes/taskRoutes')(app)
 require('./routes/organisationRoutes')(app)

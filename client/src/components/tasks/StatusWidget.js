@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const StatusChip = ({ status, _id }) => {
+const StatusWidget = ({ status, _id }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -67,4 +67,4 @@ const StatusChip = ({ status, _id }) => {
     )
 }
 
-export default StatusChip
+export default StatusWidget
