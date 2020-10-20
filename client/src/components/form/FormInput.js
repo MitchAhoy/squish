@@ -169,6 +169,23 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 						</Select>
 					</FormControl>
 		)
+		case 'task-description':
+			return (
+				<TextField 
+					rowsMin={3}
+					key={inputFor}
+					label={label}
+					name={inputFor}
+					className={classes.formInput}
+					type={type}
+					required
+					value={formData[inputFor]}
+					variant='outlined'
+					onChange={handleFormInput}
+					multiline={true}
+					rows={3}
+				/>
+			)
 			default:
 				return 'unidentified input'
 		}

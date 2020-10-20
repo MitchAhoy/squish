@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-import { Popover, MenuItem, IconButton, makeStyles, Avatar } from '@material-ui/core'
+import { Popover, MenuItem, Button, makeStyles, Avatar, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
 	formInput: {
 		width: '10rem'
-	}
+    },
+    avatarIcon: {
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        backgroundColor: theme.palette.primary.main,
+        margin: '0.2rem'
+    }
 }))
 
-const AssigneeWidget = ({ currentUser, organisationalUsers }) => {
+const AssigneeWidget = ({ currentUser, organisationUsers }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -21,12 +26,11 @@ const AssigneeWidget = ({ currentUser, organisationalUsers }) => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'assignee-popover' : undefined
-
     return (
         <div>
-            <IconButton onClick={handleClick} className={classes.chip}>
-                <Avatar>N</Avatar>
-            </IconButton>
+            <Button onClick={handleClick} className={classes.chip}>
+                <Avatar className={classes.avatarIcon}>{currentUser[0].toUpperCase()}</Avatar><Typography variant='body1'>{currentUser}</Typography>
+            </Button>
             <Popover
                 id={id}
                 open={open}
@@ -41,9 +45,9 @@ const AssigneeWidget = ({ currentUser, organisationalUsers }) => {
                     horizontal: 'center',
                 }}
             >
-                {organisationalUsers.map(({ email }) => (
+                {organisationUsers?.map((email) => (
                     <MenuItem onClick={handleClose} key={email}>
-                        <Avatar>{email[0]}</Avatar>
+                        <Avatar className={classes.avatarIcon}>{email[0].toUpperCase()}</Avatar><Typography variant='body1'>{email}</Typography>
                     </MenuItem>
                 ))}
             </Popover>

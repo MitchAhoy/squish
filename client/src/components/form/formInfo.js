@@ -43,7 +43,7 @@ const formInfo = {
             { label: 'Organisation', inputFor: 'taskOrganisation', type: 'select-organisation', value: '' },
             { label: 'Project', inputFor: 'taskProject', type: 'select-project', value: '' },
             { label: 'Task Name', inputFor: 'taskName', type: 'text', value: '' },
-            { label: 'Description', inputFor: 'taskDescription', type: 'text', value: '' },
+            { label: 'Description', inputFor: 'taskDescription', type: 'task-description', value: '' },
             { label: 'Assign To', inputFor: 'taskAssignee', type: 'text', value: '' },
             { label: 'Priority', inputFor: 'taskPriority', type: 'select-priority', value: '' },
             { label: 'Due Date', inputFor: 'taskDueDate', type: 'select-date', value: '' }

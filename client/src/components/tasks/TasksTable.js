@@ -49,8 +49,7 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
         const initState = tasks.filter(task => task.taskProject === projectId)
         setListToRender(initState)
     }, [tasks])
-
-    console.log(listToRender)
+    
     const classes = useStyles()
 
     return (

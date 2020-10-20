@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import globalTheme from './globalTheme'
+import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter } from 'react-router-dom'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
@@ -16,6 +17,7 @@ ReactDOM.render(
     <BrowserRouter>
       <ThemeProvider theme={globalTheme}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <CssBaseline />
             <OrganisationsContextProvider>
               <UserContextProvider>
                 <ProjectsContextProvider>
