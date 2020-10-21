@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const EditableText = ({ text, name, variant, handleEditChange }) => {
+const EditableText = ({ text, name, multiline, handleEditChange }) => {
     const classes = useStyles()
 
     const [isEditing, setIsEditing] = useState(false)
@@ -36,13 +36,14 @@ const EditableText = ({ text, name, variant, handleEditChange }) => {
 
     if (!isEditing) {
         return (
-            <div>
+
                 <TextField
                     className={classes.text}
                     disabled
-                    multiline
+                    multiline={multiline}
                     value={text}
                     name={name}
+                    onClick={handleEditClick}
                     onMouseEnter={handleMouseOver}
                     onMouseLeave={handleMouseOver}
                     InputProps={{
@@ -50,25 +51,23 @@ const EditableText = ({ text, name, variant, handleEditChange }) => {
                             disabled: classes.disabled,
                             root: classes.textareaRoot
                         },
-                        endAdornment:
-                            mouseOver &&
-                            <InputAdornment position="end">
-                                <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
-                            </InputAdornment>,
+                        // endAdornment:
+                        //     mouseOver &&
+                        //     <InputAdornment position="end">
+                        //         <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
+                        //     </InputAdornment>,
                     }}
                 />
 
-            </div>
         )
     }
 
     if (isEditing) {
         return (
-            <div>
                 <TextField
                     className={classes.text}
                     defaultValue={text}
-                    multiline
+                    multiline={multiline}
                     name={name}
                     onChange={handleEditChange}
                     InputProps={{
@@ -76,15 +75,13 @@ const EditableText = ({ text, name, variant, handleEditChange }) => {
                             disabled: classes.disabled,
                             root: classes.textareaRoot
                         },
-                        endAdornment:
-                            mouseOver &&
-                            <InputAdornment position="end">
-                                <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
-                            </InputAdornment>,
+                        // endAdornment:
+                        //     mouseOver &&
+                        //     <InputAdornment position="end">
+                        //         <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
+                        //     </InputAdornment>,
                     }}
                 />
-
-            </div>
         )
     }
 

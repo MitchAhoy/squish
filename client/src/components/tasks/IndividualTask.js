@@ -25,11 +25,11 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
     const { organisations } = useContext(OrganisationsContext)
     
     const [taskToRender, setTaskToRender] = useState([])
+
     const [organisationUsers, setorganisationUsers] = useState([])
 
-    let initRender = []
-
-    const handleEditChange = (evt) => setTaskToRender([{...taskToRender, [evt.target.name]: evt.target.value}])
+    const handleEditChange = (evt) => setTaskToRender([{...taskToRender[0], [evt.target.name]: evt.target.value}])
+    // const handleEditChange = (evt) => console.log([{...taskToRender[0], [evt.target.name]: evt.target.value}])
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)
@@ -45,7 +45,7 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
 
     return (
         <>
-            {taskToRender.map(({ taskStatus, taskAssignee, taskPriority, taskName, taskDescription, taskDueDate, _id }) => (
+            {taskToRender?.map(({ taskStatus, taskAssignee, taskPriority, taskName, taskDescription, taskDueDate, _id }) => (
                 <Container key={_id}>
                     <Paper>
                         <Toolbar className={classes.toolbar}>
@@ -56,7 +56,7 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
                         </Toolbar>
                         </Paper>
                         <Container>
-                            <EditableText text={taskName} name={taskName} handleEditChange={handleEditChange}/>
+                            <EditableText value={taskName} name={taskName} handleEditChange={handleEditChange}/>
                             <Typography variant='h6'>{taskDescription}</Typography>
                         </Container>
                 </Container>
