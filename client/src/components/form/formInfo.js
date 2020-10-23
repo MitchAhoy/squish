@@ -53,7 +53,7 @@ const formInfo = {
         submitBtn: 'Create Task',
         submit: async (formData) => {
             try {
-                const response = await axios.post('/api/create_task', formData)
+                const response = await axios.post('/api/tasks', formData)
                 return response
             } catch (err) {
                 throw new Error(err)

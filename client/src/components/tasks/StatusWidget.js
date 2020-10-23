@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const StatusWidget = ({ status, _id }) => {
+const StatusWidget = ({ status, id, update }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -30,12 +30,15 @@ const StatusWidget = ({ status, _id }) => {
         setAnchorEl(event.currentTarget)
     };
 
-    const handleClose = () => {
+    const handleClose = (evt) => {
+        if (evt.target.getAttribute('value') === 'open' || evt.target.getAttribute('value') === 'in progress' || evt.target.getAttribute('value') === 'completed') {
+            update(id, {taskStatus: evt.target.getAttribute('value')})
+        }
         setAnchorEl(null)
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'status-popover' : undefined
+    const popoverId = open ? 'status-popover' : undefined
 
     const statusSelection = [{label: 'open', statusClass: 'chipopen'}, {label: 'in progress', statusClass: 'chipinprogress'}, {label: 'completed', statusClass: 'chipcompleted'}]
     return (
@@ -44,7 +47,7 @@ const StatusWidget = ({ status, _id }) => {
                 <Chip label={status} className={`${classes[`chip${status.toLowerCase()}`]} ${classes.chip}`} />
             </IconButton>
             <Popover
-                id={id}
+                id={popoverId}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -58,8 +61,8 @@ const StatusWidget = ({ status, _id }) => {
                 }}
             >
                 {statusSelection.map(({label, statusClass}) => (
-                    <MenuItem onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.chip}`}>
-                        <Chip label={label} className={ `${classes.chip} ${classes[statusClass]}` } />
+                    <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.chip}`}>
+                        <Chip value={label} label={label} className={ `${classes.chip} ${classes[statusClass]}` } />
                     </MenuItem>
                 ))}
             </Popover>

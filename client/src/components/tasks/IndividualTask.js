@@ -14,28 +14,27 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         padding: '1rem 0'
     },
-    taskTitle: {
-        margin: '1.5rem 0'
+    context: {
+        width: '100%'
     }
 }))
 
 const IndividualTask = ({ match: { params: { taskId } } }) => {
     const classes = useStyles()
-    const { tasks } = useContext(TasksContext)
-    const { organisations } = useContext(OrganisationsContext)
-    
-    const [taskToRender, setTaskToRender] = useState([])
 
+    const { tasks, updateTask } = useContext(TasksContext)
+    const { organisations } = useContext(OrganisationsContext)
+
+    const [taskToRender, setTaskToRender] = useState([])
     const [organisationUsers, setorganisationUsers] = useState([])
 
-    const handleEditChange = (evt) => setTaskToRender([{...taskToRender[0], [evt.target.name]: evt.target.value}])
-    // const handleEditChange = (evt) => console.log([{...taskToRender[0], [evt.target.name]: evt.target.value}])
+    // const handleEditChange = (evt) => setTaskToRender([{ ...taskToRender[0], [evt.target.name]: evt.target.value }])
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)
         setTaskToRender(currentTask)
     }, [tasks])
-    
+
     useEffect(() => {
         if (organisations && taskToRender) {
             let [currentOrganisation] = organisations.filter(organisation => organisation._id === taskToRender[0]?.taskOrganisation)
@@ -49,16 +48,16 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
                 <Container key={_id}>
                     <Paper>
                         <Toolbar className={classes.toolbar}>
-                            <StatusWidget status={taskStatus} />
-                            <PriorityWidget priority={taskPriority} />
-                            <DateWidget taskDueDate={taskDueDate} />
-                            <AssigneeWidget organisationUsers={organisationUsers} currentUser={taskAssignee}/>
+                            <StatusWidget status={taskStatus} update={updateTask} id={_id} />
+                            <PriorityWidget priority={taskPriority} update={updateTask} id={_id} />
+                            <DateWidget taskDueDate={taskDueDate} update={updateTask} id={_id} />
+                            <AssigneeWidget organisationUsers={organisationUsers} currentUser={taskAssignee} update={updateTask} id={_id} />
                         </Toolbar>
-                        </Paper>
-                        <Container>
-                            <EditableText value={taskName} name={taskName} handleEditChange={handleEditChange}/>
-                            <Typography variant='h6'>{taskDescription}</Typography>
-                        </Container>
+                    </Paper>
+                    <Container>
+                        <EditableText className={classes.content} value={taskName} name='taskName' multiline={false} variant='title' id={_id} update={updateTask} />
+                        <EditableText className={classes.content} value={taskDescription} name='taskDescription' multiline={true} variant='description' id={_id} update={updateTask} />
+                    </Container>
                 </Container>
             ))}
 

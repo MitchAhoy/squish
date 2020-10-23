@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const PriorityWidget = ({ priority, _id }) => {
+const PriorityWidget = ({ priority, id, update }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -31,12 +31,16 @@ const PriorityWidget = ({ priority, _id }) => {
         setAnchorEl(event.currentTarget)
     };
 
-    const handleClose = () => {
+    const handleClose = (evt) => {
+        if (evt.target.getAttribute('value') === 'urgent' || evt.target.getAttribute('value') === 'high' || evt.target.getAttribute('value') === 'normal' || evt.target.getAttribute('value') === 'low') {
+            update(id, {taskPriority: evt.target.getAttribute('value')})
+
+        }
         setAnchorEl(null)
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'priority-popover' : undefined
+    const popoverId = open ? 'priority-popover' : undefined
 
     const prioritySelection = [{label: 'urgent', priorityClass: 'priorityurgent'}, {label: 'high', priorityClass: 'priorityhigh'}, {label: 'normal', priorityClass: 'prioritynormal'}, {label: 'low', priorityClass: 'prioritylow'}]
     return (
@@ -45,7 +49,7 @@ const PriorityWidget = ({ priority, _id }) => {
                 <FlagRoundedIcon className={`${classes[`priority${priority.toLowerCase()}`]} ${classes.priority}`} />
             </IconButton>
             <Popover
-                id={id}
+                id={popoverId}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -59,7 +63,7 @@ const PriorityWidget = ({ priority, _id }) => {
                 }}
             >
                 {prioritySelection.map(({label, priorityClass}) => (
-                    <MenuItem onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.priority}`}>
+                    <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.priority}`}>
                         <FlagRoundedIcon className={`${classes[priorityClass]} ${classes.priority}`} />
                         <Typography variant='body1' className={`${classes[priorityClass]} ${classes.priority}`}>{label}</Typography>
                     </MenuItem>

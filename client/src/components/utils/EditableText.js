@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, IconButton, InputAdornment, makeStyles, Typography } from '@material-ui/core'
-import { EditRounded as EditIcon } from '@material-ui/icons'
+import { TextField, Button, makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     disabled: {
@@ -14,34 +13,52 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     text: {
-        margin: '1rem',
+        margin: '1rem 0',
         '&:hover': {
-            outline: '1px #000 solid'
-        }
+            outline: '1px #C2C2C2 solid',
+            cursor: 'text'
+        },
+        width: '100%',
+        padding: '0.2rem',
     },
-    textareaRoot: {
+    title: {
         fontSize: '3rem',
-        width: '100%'
+        width: '100%',
+    },
+    description: {
+        fontSize: '1rem',
+        width: '100%',
+        border: 'none'
+    },
+    btn: {
+        margin: '0 0.2rem'
     }
+
 }))
 
-const EditableText = ({ text, name, multiline, handleEditChange }) => {
+const EditableText = ({ value, name, multiline, variant, id, update }) => {
     const classes = useStyles()
 
     const [isEditing, setIsEditing] = useState(false)
     const [mouseOver, setMouseOver] = useState(false)
+    const [formValue, setFormValue] = useState(value)
 
     const handleEditClick = () => setIsEditing(!isEditing)
     const handleMouseOver = () => setMouseOver(!mouseOver)
+    const handleEditChange = (evt) => setFormValue(evt.target.value)
+    const submitEdit = async (evt) => {
+        evt.preventDefault()
+        update(id, {[name]: formValue})
+        setIsEditing(!isEditing)
+    }
 
     if (!isEditing) {
         return (
-
                 <TextField
                     className={classes.text}
                     disabled
                     multiline={multiline}
-                    value={text}
+                    value={formValue}
                     name={name}
                     onClick={handleEditClick}
                     onMouseEnter={handleMouseOver}
@@ -49,13 +66,8 @@ const EditableText = ({ text, name, multiline, handleEditChange }) => {
                     InputProps={{
                         classes: {
                             disabled: classes.disabled,
-                            root: classes.textareaRoot
-                        },
-                        // endAdornment:
-                        //     mouseOver &&
-                        //     <InputAdornment position="end">
-                        //         <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
-                        //     </InputAdornment>,
+                            root: classes[variant]
+                        }
                     }}
                 />
 
@@ -64,24 +76,27 @@ const EditableText = ({ text, name, multiline, handleEditChange }) => {
 
     if (isEditing) {
         return (
+            <form onSubmit={submitEdit}>
                 <TextField
+                    autoFocus
                     className={classes.text}
-                    defaultValue={text}
+                    value={formValue}
+                    onChange={handleEditChange}
+                    defaultValue={value}
                     multiline={multiline}
                     name={name}
-                    onChange={handleEditChange}
                     InputProps={{
                         classes: {
                             disabled: classes.disabled,
-                            root: classes.textareaRoot
-                        },
-                        // endAdornment:
-                        //     mouseOver &&
-                        //     <InputAdornment position="end">
-                        //         <IconButton onClick={handleEditClick}><EditIcon /></IconButton>
-                        //     </InputAdornment>,
+                            root: classes[variant]
+                        }
                     }}
                 />
+                <div>
+                <Button className={classes.btn} variant='contained' color='secondary' type='submit'>Save</Button>
+                <Button className={classes.btn} variant='contained' color='primary' onClick={handleEditClick}>Cancel</Button>
+                </div>
+            </form>
         )
     }
 
