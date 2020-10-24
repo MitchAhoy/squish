@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 const PriorityWidget = ({ priority, id, update }) => {
     const classes = useStyles()
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
     };
 
     const handleClose = (evt) => {
-        if (evt.target.getAttribute('value') === 'urgent' || evt.target.getAttribute('value') === 'high' || evt.target.getAttribute('value') === 'normal' || evt.target.getAttribute('value') === 'low') {
+        if (evt.target.getAttribute('value') !== null) {
             update(id, {taskPriority: evt.target.getAttribute('value')})
 
         }
@@ -64,8 +64,8 @@ const PriorityWidget = ({ priority, id, update }) => {
             >
                 {prioritySelection.map(({label, priorityClass}) => (
                     <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.priority}`}>
-                        <FlagRoundedIcon className={`${classes[priorityClass]} ${classes.priority}`} />
-                        <Typography variant='body1' className={`${classes[priorityClass]} ${classes.priority}`}>{label}</Typography>
+                        <FlagRoundedIcon value={label} onClick={handleClose} className={`${classes[priorityClass]} ${classes.priority}`} />
+                        <Typography variant='body1' value={label} onClick={handleClose} className={`${classes[priorityClass]} ${classes.priority}`}>{label}</Typography>
                     </MenuItem>
                 ))}
             </Popover>

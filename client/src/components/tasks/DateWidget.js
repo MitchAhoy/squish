@@ -1,7 +1,7 @@
 import React from 'react'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 
-const DateWidget = ({ taskDueDate }) => {
+const DateWidget = ({ taskDueDate, update, id }) => {
     return (
         <KeyboardDatePicker
         label='Due Date'
@@ -9,7 +9,7 @@ const DateWidget = ({ taskDueDate }) => {
         format='dd/MM/yyyy'
         value={taskDueDate}
         inputVariant="outlined"
-        onChange={(date) => console.log(date)}
+        onChange={(date) => update(id, {taskDueDate: date})}
         disablePast={true}
         autoOk={true}
     />

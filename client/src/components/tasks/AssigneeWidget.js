@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const AssigneeWidget = ({ currentUser, organisationUsers }) => {
+const AssigneeWidget = ({ currentUser, organisationUsers, update, id }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -20,19 +20,23 @@ const AssigneeWidget = ({ currentUser, organisationUsers }) => {
         setAnchorEl(event.currentTarget)
     };
 
-    const handleClose = () => {
+    const handleClose = (evt) => {
+        if (evt.target.getAttribute('value') !== null) {
+            update(id, {taskAssignee: evt.target.getAttribute('value')})
+        }
+
         setAnchorEl(null)
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'assignee-popover' : undefined
+    const popoverId = open ? 'assignee-popover' : undefined
     return (
         <div>
             <Button onClick={handleClick} className={classes.chip}>
                 <Avatar className={classes.avatarIcon}>{currentUser[0].toUpperCase()}</Avatar><Typography variant='body1'>{currentUser}</Typography>
             </Button>
             <Popover
-                id={id}
+                id={popoverId}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -46,8 +50,8 @@ const AssigneeWidget = ({ currentUser, organisationUsers }) => {
                 }}
             >
                 {organisationUsers?.map((email) => (
-                    <MenuItem onClick={handleClose} key={email}>
-                        <Avatar className={classes.avatarIcon}>{email[0].toUpperCase()}</Avatar><Typography variant='body1'>{email}</Typography>
+                    <MenuItem onClick={handleClose} value={email} key={email}>
+                        <Avatar onClick={handleClose} value={email} className={classes.avatarIcon}>{email[0].toUpperCase()}</Avatar><Typography onClick={handleClose} value={email} variant='body1'>{email}</Typography>
                     </MenuItem>
                 ))}
             </Popover>

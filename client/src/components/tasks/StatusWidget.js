@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Chip, makeStyles, Popover, MenuItem, IconButton } from '@material-ui/core'
+import { Typography, Chip, makeStyles, Popover, MenuItem, IconButton } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     chip: {
@@ -31,7 +31,7 @@ const StatusWidget = ({ status, id, update }) => {
     };
 
     const handleClose = (evt) => {
-        if (evt.target.getAttribute('value') === 'open' || evt.target.getAttribute('value') === 'in progress' || evt.target.getAttribute('value') === 'completed') {
+        if (evt.target.getAttribute('value') !== null) {
             update(id, {taskStatus: evt.target.getAttribute('value')})
         }
         setAnchorEl(null)
@@ -61,8 +61,8 @@ const StatusWidget = ({ status, id, update }) => {
                 }}
             >
                 {statusSelection.map(({label, statusClass}) => (
-                    <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.chip}`}>
-                        <Chip value={label} label={label} className={ `${classes.chip} ${classes[statusClass]}` } />
+                    <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.chip}` }>
+                        <Typography clickable value={label} onClick={handleClose} label={label} className={ `${classes.chip} ${classes[statusClass]}` }>{label}</Typography>
                     </MenuItem>
                 ))}
             </Popover>

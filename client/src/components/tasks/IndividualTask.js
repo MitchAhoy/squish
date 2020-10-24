@@ -40,7 +40,7 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
             let [currentOrganisation] = organisations.filter(organisation => organisation._id === taskToRender[0]?.taskOrganisation)
             setorganisationUsers(currentOrganisation?.organisationUsers)
         }
-    }, [organisations])
+    }, [organisations, taskToRender])
 
     return (
         <>
