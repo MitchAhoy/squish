@@ -56,4 +56,18 @@ module.exports = (app) => {
         }
 
     })
+
+    app.delete('/api/tasks/:id', requireLogin, async (req, res) => {
+        try {
+            const id = req.params.id
+            const result = await Task.deleteOne({_id: id}, {new: true})
+            console.log(result)
+            res.send({_id: id})
+        } catch (err) {
+            console.log(err)
+			res.status(400)
+			res.send({ error: err })
+			return
+        }
+    })
 }

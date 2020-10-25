@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Typography, Toolbar, Container, makeStyles, Paper, CssBaseline } from '@material-ui/core'
+import { Toolbar, Container, makeStyles, Paper, IconButton } from '@material-ui/core'
+import { DeleteForeverRounded as DeleteIcon} from '@material-ui/icons'
 import StatusWidget from './StatusWidget'
 import PriorityWidget from './PriorityWidget'
 import DateWidget from './DateWidget'
@@ -19,16 +20,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const IndividualTask = ({ match: { params: { taskId } } }) => {
+const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) => {
     const classes = useStyles()
 
-    const { tasks, updateTask } = useContext(TasksContext)
+    const { tasks, updateTask, deleteTask } = useContext(TasksContext)
     const { organisations } = useContext(OrganisationsContext)
 
     const [taskToRender, setTaskToRender] = useState([])
     const [organisationUsers, setorganisationUsers] = useState([])
-
-    // const handleEditChange = (evt) => setTaskToRender([{ ...taskToRender[0], [evt.target.name]: evt.target.value }])
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)
@@ -42,6 +41,11 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
         }
     }, [organisations, taskToRender])
 
+    const deleteTaskAndRedirect = (id) => {
+        deleteTask(id)
+        history.push(`/project/${projectId}`)
+    }
+
     return (
         <>
             {taskToRender?.map(({ taskStatus, taskAssignee, taskPriority, taskName, taskDescription, taskDueDate, _id }) => (
@@ -52,10 +56,11 @@ const IndividualTask = ({ match: { params: { taskId } } }) => {
                             <PriorityWidget priority={taskPriority} update={updateTask} id={_id} />
                             <DateWidget taskDueDate={taskDueDate} update={updateTask} id={_id} />
                             <AssigneeWidget organisationUsers={organisationUsers} currentUser={taskAssignee} update={updateTask} id={_id} />
+                            <IconButton onClick={() => deleteTaskAndRedirect(_id)} variant='contained' color='secondary'><DeleteIcon /></IconButton>
                         </Toolbar>
                     </Paper>
                     <Container>
-                        <EditableText className={classes.content} value={taskName} name='taskName' multiline={false} variant='title' id={_id} update={updateTask} />
+                        <EditableText className={classes.content} value={taskName} name='taskName' multiline={true} variant='title' id={_id} update={updateTask} />
                         <EditableText className={classes.content} value={taskDescription} name='taskDescription' multiline={true} variant='description' id={_id} update={updateTask} />
                     </Container>
                 </Container>

@@ -7,17 +7,22 @@ export const TasksContextProvider = ({ children }) => {
     const initState = []
 
     const tasksReducer = (state, action) => {
+        const updatedState = state.filter(task => task._id !== action.payload._id)
         switch(action.type) {
             case 'FETCH_SUCCESS':
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
                 throw new Error(action.payload)
             case 'UPDATE_SUCCESS':
-                const updatedState = state.filter(task => task._id !== action.payload._id)
                 return [...updatedState, action.payload]
             case 'UPDATE_ERROR': 
-                console.log(action.payload)
+                console.error(action.payload)
                 return [...state]
+            case 'DELETE_SUCCESS':
+                return [...updatedState, action.payload]
+            case 'DELETE_ERROR': 
+                console.error(action.payload)
+                return [...state]            
             default: 
                 return state
         }
@@ -41,14 +46,23 @@ export const TasksContextProvider = ({ children }) => {
         try {
             const req = await axios.patch(`/api/tasks/${id}`, content)
             tasksDispatch({type: 'UPDATE_SUCCESS', payload: req.data})
-            console.log(req)
         } catch (err) {
             tasksDispatch({type: 'UPDATE_ERROR', payload: err})
         }
     }
 
+    const deleteTask = async (id) => {
+        try {
+            const req = await axios.delete(`/api/tasks/${id}`)
+            console.log(req)
+            tasksDispatch({type: 'DELETE_SUCCESS', payload: req.data})
+        } catch (err) {
+            tasksDispatch({type: 'DELETE_ERROR', payload: err})
+        }
+    }
+
     return (
-        <TasksContext.Provider value={{tasks, updateTask}}>
+        <TasksContext.Provider value={{tasks, updateTask, deleteTask}}>
             {children}
         </TasksContext.Provider>
     )

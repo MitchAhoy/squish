@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, makeStyles, Button, Paper, Container } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, makeStyles, Chip, Paper, Container } from '@material-ui/core'
+import { DeleteForeverRounded as DeleteIcon, EditRounded as EditIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import { TasksContext } from '../../context/tasks.context'
-import StatusWidget from './StatusWidget'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
     tableHeadCell: {
         color: '#FFFFFF',
+        textAlign: 'center'
+    },
+    tableBodyCell: {
         textAlign: 'center'
     },
     linkCell: {
@@ -41,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const tableHeaders = [{ label: 'Task', labelFor: 'taskName' }, { label: 'Due Date', labelFor: 'taskDueDate' }, { label: 'Assigned To', labelFor: 'taskAssignee' }, { label: 'Priority', labelFor: 'taskPriority' }, { label: 'Status', labelFor: 'taskStatus' }, { label: '', labelFor: '' }]
 
 const TasksTable = ({ match: { params: { projectId }} }) => {
-    const { tasks } = useContext(TasksContext)
+    const { tasks, deleteTask } = useContext(TasksContext)
 
     const [listToRender, setListToRender] = useState([])
 
@@ -65,12 +68,12 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
                         {listToRender.map(({ taskName, taskDueDate, taskAssignee, taskPriority, taskStatus, _id }) => {
                             return (
                                 <TableRow hover key={_id}>
-                                    <TableCell>{taskName}</TableCell>
-                                    <TableCell>{taskDueDate}</TableCell>
-                                    <TableCell>{taskAssignee}</TableCell>
-                                    <TableCell>{taskPriority}</TableCell>
-                                    <TableCell><StatusWidget status={taskStatus} /></TableCell>
-                                    <TableCell><Link className={classes.linkCell} to={`/project/${projectId}/task/${_id}`}><Button variant='contained' color='secondary'>More</Button></Link></TableCell>
+                                    <TableCell className={classes.tableBodyCell}>{taskName}</TableCell>
+                                    <TableCell className={classes.tableBodyCell}>{taskDueDate}</TableCell>
+                                    <TableCell className={classes.tableBodyCell}>{taskAssignee}</TableCell>
+                                    <TableCell className={classes.tableBodyCell}>{taskPriority}</TableCell>
+                                    <TableCell className={classes.tableBodyCell}><Chip label={taskStatus} /></TableCell>
+                                    <TableCell className={classes.tableBodyCell}><Link className={classes.linkCell} to={`/project/${projectId}/task/${_id}`}><IconButton variant='contained' color='secondary'><EditIcon /></IconButton></Link><IconButton onClick={() => deleteTask(_id)} variant='contained' color='secondary'><DeleteIcon /></IconButton></TableCell>
                                 </TableRow>
                             )
                         })}

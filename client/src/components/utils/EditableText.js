@@ -41,15 +41,19 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
 
     const [isEditing, setIsEditing] = useState(false)
     const [mouseOver, setMouseOver] = useState(false)
-    const [formValue, setFormValue] = useState(value)
+    const [tempEditingValue, setTempEditingValue] = useState(value)
 
     const handleEditClick = () => setIsEditing(!isEditing)
     const handleMouseOver = () => setMouseOver(!mouseOver)
-    const handleEditChange = (evt) => setFormValue(evt.target.value)
+    const handleEditChange = (evt) => setTempEditingValue(evt.target.value)
+    const resetTempEditingValue = () => {
+        setTempEditingValue(value)
+        setIsEditing(false)
+    }
     const submitEdit = async (evt) => {
         evt.preventDefault()
-        update(id, {[name]: formValue})
-        setIsEditing(!isEditing)
+        update(id, {[name]: tempEditingValue})
+        setIsEditing(false)
     }
 
     if (!isEditing) {
@@ -58,7 +62,7 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
                     className={classes.text}
                     disabled
                     multiline={multiline}
-                    value={formValue}
+                    value={value}
                     name={name}
                     onClick={handleEditClick}
                     onMouseEnter={handleMouseOver}
@@ -80,9 +84,8 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
                 <TextField
                     autoFocus
                     className={classes.text}
-                    value={formValue}
+                    value={tempEditingValue}
                     onChange={handleEditChange}
-                    defaultValue={value}
                     multiline={multiline}
                     name={name}
                     InputProps={{
@@ -91,10 +94,15 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
                             root: classes[variant]
                         }
                     }}
+                    onFocus={(evt) => {
+                        let val = evt.target.value;
+                        evt.target.value = '';
+                        evt.target.value = val;
+                    }}
                 />
                 <div>
-                <Button className={classes.btn} variant='contained' color='secondary' type='submit'>Save</Button>
-                <Button className={classes.btn} variant='contained' color='primary' onClick={handleEditClick}>Cancel</Button>
+                <Button className={classes.btn} variant='contained' color='secondary' type='submit' >Save</Button>
+                <Button className={classes.btn} variant='contained' color='primary' onClick={resetTempEditingValue}>Cancel</Button>
                 </div>
             </form>
         )
