@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import { IconButton, makeStyles, Typography, Modal, Backdrop, Fade, Link } from '@material-ui/core'
+import { IconButton, makeStyles, Typography, Modal, Backdrop, Fade, Link as MUILink } from '@material-ui/core'
 import { Clear as ClearIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +49,13 @@ const SignInModal = ({ open, toggleModal}) => {
                   <div>
                       <Typography variant='h5' gutterBottom>Sign in to Squish</Typography>
                       <Typography variant='body1' gutterBottom>We will only ever use your profile data to save your projects.</Typography>
-                      <Link href='/auth/google'>
-                          <img src='https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png' className={classes.signInButton} alt='sign in with google button' />
-                      </Link>
+                      <MUILink 
+                        underline='none'
+                        href='/auth/google'
+                        color='inherit'
+                      >
+                          <img src='https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png' className={classes.signInButton} alt='Sign In With Google' />
+                      </MUILink>
                   </div>
               </div>
           </Fade>

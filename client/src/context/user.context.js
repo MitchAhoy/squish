@@ -12,7 +12,7 @@ export const UserContextProvider = ({ children }) => {
                 const req = await axios.get('/api/current_user')
                 if (req.data) setUser(req.data)
             } catch (err) {
-                console.log(err)
+                console.error(err)
             }
         }
         fetchUser()

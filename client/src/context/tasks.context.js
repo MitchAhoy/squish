@@ -12,7 +12,7 @@ export const TasksContextProvider = ({ children }) => {
             case 'FETCH_SUCCESS':
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
-                throw new Error(action.payload)
+                return [...state]
             case 'UPDATE_SUCCESS':
                 return [...updatedState, action.payload]
             case 'UPDATE_ERROR': 

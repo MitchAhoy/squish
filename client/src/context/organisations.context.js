@@ -11,7 +11,7 @@ export const OrganisationsContextProvider = ({ children }) => {
             case 'FETCH_SUCCESS':
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
-                throw new Error(action.payload)
+                return [...state]
             default:
                 return state
         }   

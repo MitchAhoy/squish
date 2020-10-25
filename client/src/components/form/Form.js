@@ -1,6 +1,6 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import { Paper, makeStyles, CssBaseline, Button, Typography } from '@material-ui/core'
-import formInfo, { formReducer } from './formInfo'
+import formInfo from './formInfo'
 import FormInput from './FormInput'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +27,7 @@ const Form = ({ history, match: {params: {formFor}}}) => {
         evt.preventDefault()
         submit(formData)
         setFormData({})
+        history.goBack()
     }
 
 	return (
@@ -37,7 +38,7 @@ const Form = ({ history, match: {params: {formFor}}}) => {
                 <form onSubmit={handleFormSubmit}>
                 <FormInput fields={fields} setFormData={setFormData} handleFormInput={handleFormInput} handleDateInput={handleDateInput} formData={formData} />
                     <div className={classes.formButtons}>
-                        <Button variant='contained' color='primary'>
+                        <Button variant='contained' color='primary' onClick={() => history.goBack()}>
                             Cancel
                             </Button>
                         <Button variant='contained' color='secondary' type='submit'>

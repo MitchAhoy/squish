@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
 	TextField,
 	makeStyles,
@@ -6,7 +6,10 @@ import {
 	FormControl,
 	MenuItem,
 	InputLabel,
+	IconButton
 } from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { Add as AddIcon } from '@material-ui/icons'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { OrganisationsContext } from '../../context/organisations.context'
 import { ProjectsContext } from '../../context/projects.context'
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 	},
 	formInput: {
-		marginTop: '1rem',
+		margin: '0.5rem 0',
 		width: '100%'
 	},
 	formButtons: {
@@ -28,18 +31,20 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '2rem',
 		justifyContent: 'space-between',
 	},
-	createCustomerBtn: {
-		marginTop: '0.75rem',
-	},
-	createCustomerLink: {
-		textDecoration: 'none'
-	},
-	noCustomers: {
-		width: '100%',
-	},
 	datePicker: {
 		width: '4rem',
 	},
+	selectContainer: {
+		width: '100%',
+		display: 'flex',
+		alignItems: 'center'
+
+	},
+	selectInput: {
+		minWidth: '10rem',
+		flexGrow: 3,
+		margin: '0.5rem 0',
+	}
 }))
 
 const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
@@ -117,9 +122,10 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 					)
 				case 'select-organisation':	
 					return (
+						<div className={classes.selectContainer}>
 						<FormControl
-							variant='outlined'
-							className={classes.formInput}
+							variant='outlined'		
+							className={classes.selectInput}					
 						>
 							<InputLabel id={inputFor}>{label}</InputLabel>
 							<Select
@@ -141,12 +147,17 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 							)}
 							</Select>
 						</FormControl>
+						<Link to='/create/organisation'><IconButton><AddIcon /></IconButton></Link>
+						</div>
 			)
 			case 'select-project':
+				const currentOrganisationSelected = formData.taskOrganisation
+				const projectsToRender = projects.filter(project => project.projectOrganisation === currentOrganisationSelected)
 				return (
+					<div className={classes.selectContainer}>
 					<FormControl
 						variant='outlined'
-						className={classes.formInput}
+						className={classes.selectInput}	
 					>
 						<InputLabel id={inputFor}>{label}</InputLabel>
 						<Select
@@ -157,17 +168,19 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 							name={inputFor}
 							required
 						>
-						{projects.length > 0 ? projects.map(({_id, projectName}) => (
+						{projectsToRender.length > 0 ? projectsToRender.map(({_id, projectName}) => (
 							<MenuItem key={_id} value={_id}>
 								{projectName}
 							</MenuItem>
 						)) : (
 							<MenuItem disabled>
-								Please create a project first.
+								Please select an organisation first.
 							</MenuItem>
 						)}
 						</Select>
 					</FormControl>
+					<Link to='/create/project'><IconButton><AddIcon /></IconButton></Link>
+					</div>
 		)
 		case 'task-description':
 			return (

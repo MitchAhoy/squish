@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Chip, makeStyles, Popover, MenuItem, IconButton, Typography } from '@material-ui/core'
+import { makeStyles, Popover, MenuItem, IconButton, Typography } from '@material-ui/core'
 import {FlagRounded as FlagRoundedIcon} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 const PriorityWidget = ({ priority, id, update }) => {
     const classes = useStyles()
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null)
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    };
+    const handleClick = (evt) => {
+        setAnchorEl(evt.currentTarget)
+    }
 
     const handleClose = (evt) => {
         if (evt.target.getAttribute('value') !== null) {
@@ -37,7 +37,7 @@ const PriorityWidget = ({ priority, id, update }) => {
 
         }
         setAnchorEl(null)
-    };
+    }
 
     const open = Boolean(anchorEl);
     const popoverId = open ? 'priority-popover' : undefined
