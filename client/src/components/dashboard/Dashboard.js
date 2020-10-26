@@ -4,6 +4,7 @@ import { DeleteForeverRounded as DeleteIcon, EditRounded as EditIcon } from '@ma
 import { TasksContext } from '../../context/tasks.context'
 import { UserContext } from '../../context/user.context'
 import { Link } from 'react-router-dom'
+import formatDate from '../utils/formatDate'
 
 const useStyles = makeStyles((theme) => ({
     dashboardContainer: {
@@ -86,7 +87,7 @@ const Dashboard = () => {
                                 return (
                                     <TableRow hover key={_id}>
                                         <TableCell className={classes.tableBodyCell}>{taskName}</TableCell>
-                                        <TableCell className={classes.tableBodyCell}>{taskDueDate}</TableCell>
+                                        <TableCell className={classes.tableBodyCell}>{formatDate(taskDueDate)}</TableCell>
                                         <TableCell className={classes.tableBodyCell}>{taskAssignee}</TableCell>
                                         <TableCell className={classes.tableBodyCell}>{taskPriority}</TableCell>
                                         <TableCell className={classes.tableBodyCell}><Chip label={taskStatus} /></TableCell>

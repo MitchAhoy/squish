@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { makeStyles, Container } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { makeStyles, Container, Typography } from '@material-ui/core'
 import ProjectCard from './ProjectCard'
 import { ProjectsContext } from '../../context/projects.context'
 
@@ -17,12 +17,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Projects = () => {
     const classes = useStyles()
-    const { projects, projectsDispatch } = useContext(ProjectsContext)
+    const { projects } = useContext(ProjectsContext)
 
 
 
     return (
         <Container>
+            <Typography variant='h2' gutterBottom>Projects</Typography>
             <div className={classes.cardsContainer}>
                 {projects.length > 0 && projects.map((project) => <ProjectCard key={project._id}  project={project} />)}
             </div>

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AssigneeWidget = ({ currentUser, organisationUsers, update, id }) => {
     const classes = useStyles()
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)

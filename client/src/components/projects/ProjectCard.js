@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const ProjectCard = ({ project }) => {
 
     const classes = useStyles()
-    const { projectCreatedOn, projectCreator, projectDescription, projectName, _id } = project || ''
+    const { projectDescription, projectName, _id } = project || ''
 
 	return (
 		<Paper className={classes.cardContainer} elevation={3}>

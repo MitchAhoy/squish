@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
+const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormData}) => {
 	const { organisations } = useContext(OrganisationsContext)
 	const { projects } = useContext(ProjectsContext)
 	const classes = useStyles()
@@ -147,7 +147,7 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 							)}
 							</Select>
 						</FormControl>
-						<Link to='/create/organisation'><IconButton><AddIcon /></IconButton></Link>
+						<Link to='/create/organisation' onClick={() => setFormData({})}><IconButton><AddIcon /></IconButton></Link>
 						</div>
 			)
 			case 'select-project':
@@ -179,7 +179,7 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData}) => {
 						)}
 						</Select>
 					</FormControl>
-					<Link to='/create/project'><IconButton><AddIcon /></IconButton></Link>
+					<Link to='/create/project' onClick={() => setFormData({})}><IconButton><AddIcon /></IconButton></Link>
 					</div>
 		)
 		case 'task-description':

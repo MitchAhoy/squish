@@ -7,32 +7,61 @@ export const OrganisationsContextProvider = ({ children }) => {
     const initState = []
 
     const organisationsReducer = (state, action) => {
-        switch(action.type) {
+        const updatedState = state.filter(org => org._id !== action.payload._id)
+        switch (action.type) {
             case 'FETCH_SUCCESS':
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
                 return [...state]
+            case 'UPDATE_SUCCESS':
+                return [...updatedState, action.payload]
+            case 'UPDATE_ERROR':
+                console.error(action.payload)
+                return [...state]
+            case 'DELETE_SUCCESS':
+                return [...updatedState, action.payload]
+            case 'DELETE_ERROR':
+                console.error(action.payload)
+                return [...state]
             default:
                 return state
-        }   
+        }
     }
 
     useEffect(() => {
         const initFetch = async () => {
             try {
                 const req = await axios.get('/api/fetch_organisations')
-                organisationsDispatch({type: 'FETCH_SUCCESS', payload: req.data})
+                organisationsDispatch({ type: 'FETCH_SUCCESS', payload: req.data })
             } catch (err) {
-                organisationsDispatch({type: 'FETCH_ERROR', payload: err})
+                organisationsDispatch({ type: 'FETCH_ERROR', payload: err })
             }
         }
         initFetch()
     }, [])
 
+    const updateOrganisation = async (id, content) => {
+        try {
+            const req = await axios.patch(`/api/organisations/${id}`, content)
+            organisationsDispatch({type: 'UPDATE_SUCCESS', payload: req.data})
+        } catch (err) {
+            organisationsDispatch({type: 'UPDATE_ERROR', payload: err})
+        }
+    }
+
+    const editOrganisationUser = async (id, user, action) => {
+        try {
+            const req = await axios.patch(`/api/organisation/${id}/user/${user}`, {action})
+            organisationsDispatch({type: 'UPDATE_SUCCESS', payload: req.data})
+        } catch (err) {
+            organisationsDispatch({type: 'UPDATE_ERROR', payload: err})
+        }
+    }
+
     const [organisations, organisationsDispatch] = useReducer(organisationsReducer, initState)
 
     return (
-        <OrganisationsContext.Provider value={{organisations, organisationsDispatch}}>
+        <OrganisationsContext.Provider value={{ organisations, updateOrganisation, editOrganisationUser }}>
             {children}
         </OrganisationsContext.Provider>
     )

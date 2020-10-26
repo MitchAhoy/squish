@@ -5,15 +5,15 @@ const useStyles = makeStyles((theme) => ({
     chip: {
         cursor: 'pointer'
     },
-    chipopen: {
+    open: {
         background: theme.statusColour.open,
         color: theme.palette.text.light,
     },
-    chipinprogress: {
+    inprogress: {
         background: theme.statusColour.inProgress,
         color: theme.palette.text.light,
     },
-    chipcompleted: {
+    completed: {
         background: theme.statusColour.completed,
         color: theme.palette.text.light,
     },
@@ -40,11 +40,11 @@ const StatusWidget = ({ status, id, update }) => {
     const open = Boolean(anchorEl);
     const popoverId = open ? 'status-popover' : undefined
 
-    const statusSelection = [{label: 'open', statusClass: 'chipopen'}, {label: 'in progress', statusClass: 'chipinprogress'}, {label: 'completed', statusClass: 'chipcompleted'}]
+    const statusSelection = [{label: 'open', statusClass: 'open'}, {label: 'in progress', statusClass: 'progress'}, {label: 'completed', statusClass: 'completed'}]
     return (
         <div>
             <IconButton onClick={handleClick} className={classes.chip}>
-                <Chip label={status} className={`${classes[`chip${status.toLowerCase()}`]} ${classes.chip}`} />
+                <Chip label={status} className={`${classes[`${status.toLowerCase().replace(/ /g, '')}`]} ${classes.chip}`} />
             </IconButton>
             <Popover
                 id={popoverId}
@@ -62,7 +62,7 @@ const StatusWidget = ({ status, id, update }) => {
             >
                 {statusSelection.map(({label, statusClass}) => (
                     <MenuItem value={label} onClick={handleClose} key={label} className={`${classes.popoverText} ${classes.chip}` }>
-                        <Typography clickable value={label} onClick={handleClose} label={label} className={ `${classes.chip} ${classes[statusClass]}` }>{label}</Typography>
+                        <Typography value={label} onClick={handleClose} label={label}>{label}</Typography>
                     </MenuItem>
                 ))}
             </Popover>

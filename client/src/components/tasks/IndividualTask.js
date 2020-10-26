@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         padding: '1rem 0'
     },
-    context: {
+    content: {
         width: '100%'
     }
 }))
@@ -36,7 +36,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
 
     useEffect(() => {
         if (organisations && taskToRender) {
-            let [currentOrganisation] = organisations.filter(organisation => organisation._id === taskToRender[0]?.taskOrganisation)
+            let currentOrganisation = organisations.filter(organisation => organisation._id === taskToRender[0]?.taskOrganisation)[0]
             setorganisationUsers(currentOrganisation?.organisationUsers)
         }
     }, [organisations, taskToRender])

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Button, makeStyles, IconButton } from '@material-ui/core'
+import { TextField, Button, makeStyles, IconButton, InputAdornment } from '@material-ui/core'
 import { EditRounded as EditIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
     textFieldContainer: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center'
+    },
+    textFieldContainer: {
+        display: 'flex',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     text: {
@@ -51,7 +56,8 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
         console.log('clicked')
         setIsEditing(!isEditing)
     }
-    const handleMouseOver = () => setMouseOver(!mouseOver)
+    const handleMouseEnter = () => setMouseOver(true)
+    const handleMouseLeave = () => setMouseOver(false)
     const handleEditChange = (evt) => setTempEditingValue(evt.target.value)
     const resetTempEditingValue = () => {
         setTempEditingValue(value)
@@ -70,8 +76,8 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
         return (
             <div 
                 className={classes.textFieldContainer} 
-                onMouseEnter={handleMouseOver}
-                onMouseLeave={handleMouseOver}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
             >
                 <TextField
                     className={classes.text}
@@ -83,7 +89,7 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
                         classes: {
                             disabled: classes.disabled,
                             root: classes[variant]
-                        },
+                        }
 
                     }}
                 />
@@ -96,6 +102,8 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
         return (
             <form onSubmit={submitEdit}>
                 <TextField
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                     autoFocus
                     className={classes.text}
                     value={tempEditingValue}

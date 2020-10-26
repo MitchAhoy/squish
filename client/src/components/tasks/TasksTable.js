@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconB
 import { DeleteForeverRounded as DeleteIcon, EditRounded as EditIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import { TasksContext } from '../../context/tasks.context'
+import formatDate from '../utils/formatDate'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +70,7 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
                             return (
                                 <TableRow hover key={_id}>
                                     <TableCell className={classes.tableBodyCell}>{taskName}</TableCell>
-                                    <TableCell className={classes.tableBodyCell}>{taskDueDate}</TableCell>
+                                    <TableCell className={classes.tableBodyCell}>{formatDate(taskDueDate)}</TableCell>
                                     <TableCell className={classes.tableBodyCell}>{taskAssignee}</TableCell>
                                     <TableCell className={classes.tableBodyCell}>{taskPriority}</TableCell>
                                     <TableCell className={classes.tableBodyCell}><Chip label={taskStatus} /></TableCell>

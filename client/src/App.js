@@ -8,6 +8,8 @@ import Form from './components/form/Form'
 import TasksTable from './components/tasks/TasksTable'
 import IndividualTask from './components/tasks/IndividualTask'
 import CreateButton from './components/utils/CreateButton'
+import OrganisationsOverview from './components/organisations/OrganisationsOverview'
+import IndividualOrganisation from './components/organisations/IndividualOrganisation'
 
 
 
@@ -16,16 +18,19 @@ import CreateButton from './components/utils/CreateButton'
 const App = () => {
 
   const { user } = useContext(UserContext)
+  const isLoggedIn = Object.keys(user).length > 0
 
   return (
     <div>
     <NavBar user={user} />
 
-      {user.length > 0 && (
+      {isLoggedIn && (
         <>
 
                 <Switch>
                     <Route exact path='/dashboard' component={Dashboard} />
+                    <Route exact path='/organisations-overview' component={OrganisationsOverview} />
+                    <Route exact path='/organisation/:organisationId' component={IndividualOrganisation} />
                     <Route exact path='/projects-overview' component={ProjectsOverview} />
                     <Route exact path='/project/:projectId' component={TasksTable} />
                     <Route exact path='/project/:projectId/task/:taskId' component={IndividualTask} />

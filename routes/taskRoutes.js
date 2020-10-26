@@ -46,7 +46,6 @@ module.exports = (app) => {
             const id = req.params.id
             const updates = req.body
             const result = await Task.findByIdAndUpdate({_id: id}, {$set: updates}, {new: true})
-            console.log(updates,result)
             res.send(result)
         } catch (err) {
             console.log(err)
@@ -61,7 +60,6 @@ module.exports = (app) => {
         try {
             const id = req.params.id
             const result = await Task.deleteOne({_id: id}, {new: true})
-            console.log(result)
             res.send({_id: id})
         } catch (err) {
             console.log(err)
