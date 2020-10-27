@@ -3,7 +3,7 @@ const Project = mongoose.model('project')
 const requireLogin = require('../middleware/requireLogin')
 
 module.exports = (app) => {
-    app.post('/api/create_project', requireLogin, async (req, res) => {
+    app.post('/api/projects', requireLogin, async (req, res) => {
         const { projectName, projectDescription, projectUsers, projectOrganisation} = req.body
         const parsedUsers = projectUsers.split(',').filter(el => el.length > 0).map(el => el.replace(/ /g, '')).concat([req.user.email])
         try {
@@ -16,6 +16,7 @@ module.exports = (app) => {
                 projectOrganisation
             }).save()
             res.send(project)
+            console.log(project)
             return
         } catch (err) {
             console.log(err)
@@ -25,7 +26,7 @@ module.exports = (app) => {
         }
     })
 
-    app.get('/api/fetch_projects', requireLogin, async (req, res) => {
+    app.get('/api/projects', requireLogin, async (req, res) => {
         const projects = await Project.find({projectUsers: req.user.email}).exec()
         res.send(projects)
     })

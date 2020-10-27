@@ -10,8 +10,12 @@ import { TasksContext } from '../../context/tasks.context'
 import { OrganisationsContext } from '../../context/organisations.context'
 
 const useStyles = makeStyles((theme) => ({
+    toolbarContainer: {
+        boxShadow: theme.customShadow.xl
+    },
     toolbar: {
         display: 'flex',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         padding: '1rem 0'
     },
@@ -50,7 +54,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
         <>
             {taskToRender?.map(({ taskStatus, taskAssignee, taskPriority, taskName, taskDescription, taskDueDate, _id }) => (
                 <Container key={_id}>
-                    <Paper>
+                    <Paper className={classes.toolbarContainer}>
                         <Toolbar className={classes.toolbar}>
                             <StatusWidget status={taskStatus} update={updateTask} id={_id} />
                             <PriorityWidget priority={taskPriority} update={updateTask} id={_id} />

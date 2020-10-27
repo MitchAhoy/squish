@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.getContrastText(theme.palette.primary.main),
         backgroundColor: theme.palette.primary.main,
         margin: '0.2rem'
+    },
+    menuEmail: {
+        wordWrap: 'break-word'
     }
 }))
 
@@ -33,7 +36,7 @@ const AssigneeWidget = ({ currentUser, organisationUsers, update, id }) => {
     return (
         <div>
             <Button onClick={handleClick} className={classes.chip}>
-                <Avatar className={classes.avatarIcon}>{currentUser[0].toUpperCase()}</Avatar><Typography variant='body1'>{currentUser}</Typography>
+                <Avatar className={classes.avatarIcon}>{currentUser[0].toUpperCase()}</Avatar><Typography variant='caption'>{currentUser}</Typography>
             </Button>
             <Popover
                 id={popoverId}

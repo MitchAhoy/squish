@@ -156,7 +156,7 @@ const NavBar = ({ user }) => {
             <Divider />
             <List>
               {menuOptions.map(({ label, linkTo, icon }) => (
-                <Link to={linkTo} className={classes.link} key={label}>
+                <Link to={linkTo} className={classes.link} key={label} onClick={handleDrawerClose}>
                   <ListItem button>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText primary={label} />
@@ -167,6 +167,7 @@ const NavBar = ({ user }) => {
             <Divider />
             <List>
               {<MUILink
+                onClick={handleDrawerClose}
                 underline='none'
                 href='/api/logout'
                 color='inherit'

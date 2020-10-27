@@ -42,7 +42,7 @@ const PriorityWidget = ({ priority, id, update }) => {
     const open = Boolean(anchorEl);
     const popoverId = open ? 'priority-popover' : undefined
 
-    const prioritySelection = [{label: 'urgent', priorityClass: 'priorityurgent'}, {label: 'high', priorityClass: 'priorityhigh'}, {label: 'normal', priorityClass: 'prioritynormal'}, {label: 'low', priorityClass: 'prioritylow'}]
+    const prioritySelection = [{label: 'Urgent', priorityClass: 'priorityurgent'}, {label: 'High', priorityClass: 'priorityhigh'}, {label: 'Normal', priorityClass: 'prioritynormal'}, {label: 'Low', priorityClass: 'prioritylow'}]
     return (
         <div>
             <IconButton onClick={handleClick} className={classes.priority}>

@@ -55,7 +55,6 @@ const Dashboard = () => {
     const taskCards = ['open', 'in progress', 'completed']
     const tableHeaders = [{ label: 'Task', labelFor: 'taskName' }, { label: 'Due Date', labelFor: 'taskDueDate' }, { label: 'Assigned To', labelFor: 'taskAssignee' }, { label: 'Priority', labelFor: 'taskPriority' }, { label: 'Status', labelFor: 'taskStatus' }, { label: '', labelFor: '' }]
     const listToRender = tasks.filter(task => task.taskAssignee === user.email && (task.taskStatus === 'open' || task.taskStatus === 'in progress'))
-    console.log(listToRender)
     const classes = useStyles()
     return (
         <Container className={classes.dashboardContainer}>

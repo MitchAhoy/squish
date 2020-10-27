@@ -5,7 +5,7 @@ const formInfo = {
         title: 'Add An Organisation',
         fields: [
             { label: 'Organisation Name', inputFor: 'organisationName', type: 'text', value: '' },
-            { label: 'Add Users', inputFor: 'organisationUsers', type: 'text', value: '' },
+            { label: 'Add Users', inputFor: 'organisationUsers', type: 'add-users', value: '' },
         ],
         cta: 'Add Organisation',
         submitBtn: 'Add Organisation',
@@ -24,13 +24,13 @@ const formInfo = {
             { label: 'Organisation', inputFor: 'projectOrganisation', type: 'select-organisation', value: '' },
             { label: 'Project Name', inputFor: 'projectName', type: 'text', value: '' },
             { label: 'Description', inputFor: 'projectDescription', type: 'text', value: '' },
-            { label: 'Invite Users', inputFor: 'projectUsers', type: 'text', value: '' },
+            { label: 'Invite Users', inputFor: 'projectUsers', type: 'add-users', value: '' },
         ],
         cta: 'Create Project',
         submitBtn: 'Create Project',
         submit: async (formData) => {
             try {
-                const response = await axios.post('/api/create_project', formData)
+                const response = await axios.post('/api/projects', formData)
                 return response
             } catch (err) {
                 throw new Error(err)
@@ -44,7 +44,7 @@ const formInfo = {
             { label: 'Project', inputFor: 'taskProject', type: 'select-project', value: '' },
             { label: 'Task Name', inputFor: 'taskName', type: 'text', value: '' },
             { label: 'Description', inputFor: 'taskDescription', type: 'task-description', value: '' },
-            { label: 'Assign To', inputFor: 'taskAssignee', type: 'text', value: '' },
+            { label: 'Assign To', inputFor: 'taskAssignee', type: 'task-assignee', value: '' },
             { label: 'Priority', inputFor: 'taskPriority', type: 'select-priority', value: '' },
             { label: 'Due Date', inputFor: 'taskDueDate', type: 'select-date', value: '' }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import {
 	TextField,
 	makeStyles,
@@ -13,6 +13,7 @@ import { Add as AddIcon } from '@material-ui/icons'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { OrganisationsContext } from '../../context/organisations.context'
 import { ProjectsContext } from '../../context/projects.context'
+import validateEmails from '../utils/validateEmails'
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -52,6 +53,7 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 	const { projects } = useContext(ProjectsContext)
 	const classes = useStyles()
 	const renderFields = fields.map(({ label, inputFor, type }) => {
+		const currentOrganisationSelected = formData.taskOrganisation
 		switch (type) {
 			case 'text':
 				return (
@@ -67,7 +69,8 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 						onChange={handleFormInput}
 					/>
 				)
-			case 'email':
+			case 'add-users':
+				const incorrectEmails = (formData[inputFor] !== undefined && validateEmails(formData[inputFor]))
 				return (
 					<TextField
 						key={inputFor}
@@ -79,6 +82,8 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 						value={formData[inputFor]}
 						variant='outlined'
 						onChange={handleFormInput}
+						error={incorrectEmails}
+						helperText={validateEmails(formData[inputFor])}
 					/>
 				)
 			case 'select-priority':
@@ -151,8 +156,8 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 						</div>
 			)
 			case 'select-project':
-				const currentOrganisationSelected = formData.taskOrganisation
-				const projectsToRender = projects.filter(project => project.projectOrganisation === currentOrganisationSelected)
+				const projectsToRender = formData.taskOrganisation && projects.filter(project => project.projectOrganisation === currentOrganisationSelected)
+				console.log(projectsToRender)
 				return (
 					<div className={classes.selectContainer}>
 					<FormControl
@@ -168,7 +173,7 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 							name={inputFor}
 							required
 						>
-						{projectsToRender.length > 0 ? projectsToRender.map(({_id, projectName}) => (
+						{projectsToRender && projectsToRender.length > 0 ? projectsToRender.map(({_id, projectName}) => (
 							<MenuItem key={_id} value={_id}>
 								{projectName}
 							</MenuItem>
@@ -198,6 +203,38 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 					multiline={true}
 					rows={3}
 				/>
+			)
+		case 'task-assignee':
+			const [filteredOrganisation] = organisations.filter(({_id}) => _id === currentOrganisationSelected)
+			const usersToRender = filteredOrganisation?.organisationUsers
+			return (
+				<div className={classes.selectContainer}>
+				<FormControl
+					variant='outlined'
+					className={classes.selectInput}	
+				>
+					<InputLabel id={inputFor}>{label}</InputLabel>
+					<Select
+						labelId={`${inputFor}-label`}
+						id={`${inputFor}-select`}
+						label={label}
+						onChange={handleFormInput}
+						name={inputFor}
+						required
+					>
+					{usersToRender ? usersToRender.map((userEmail) => (
+						<MenuItem key={userEmail} value={userEmail}>
+							{userEmail}
+						</MenuItem>
+					)) : (
+						<MenuItem disabled>
+							Add users or select an organisation
+						</MenuItem>
+					)}
+					</Select>
+				</FormControl>
+				{!!usersToRender && <Link to={`/organisation/${filteredOrganisation._id}`}><IconButton><AddIcon /></IconButton></Link>}
+				</div>
 			)
 			default:
 				return 'unidentified input'

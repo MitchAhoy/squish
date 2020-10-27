@@ -53,7 +53,6 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
     const [tempEditingValue, setTempEditingValue] = useState(value)
     
     const handleEditClick = () => {
-        console.log('clicked')
         setIsEditing(!isEditing)
     }
     const handleMouseEnter = () => setMouseOver(true)
@@ -81,6 +80,7 @@ const EditableText = ({ value, name, multiline, variant, id, update }) => {
             >
                 <TextField
                     className={classes.text}
+                    onClick={handleEditClick}
                     disabled
                     multiline={multiline}
                     value={value}

@@ -12,6 +12,11 @@ export const ProjectsContextProvider = ({ children }) => {
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
                 return [...state]
+            case 'CREATE_SUCCESS':
+                return [...state, action.payload]
+            case 'CREATE_ERROR':
+                console.error(action.payload)
+                return [...state]
             default: 
                 return state
         }
@@ -22,7 +27,7 @@ export const ProjectsContextProvider = ({ children }) => {
     useEffect(() => {
         const initFetch = async () => {
             try {
-                const req = await axios.get('/api/fetch_projects')
+                const req = await axios.get('/api/projects')
                 projectsDispatch({type: 'FETCH_SUCCESS', payload: req.data})
             } catch (err) {
                 projectsDispatch({type: 'FETCH_ERROR', payload: err})
@@ -31,8 +36,17 @@ export const ProjectsContextProvider = ({ children }) => {
         initFetch()
     }, [])
 
+    const createProject = async (content) => {
+        try {
+            const req = await axios.post('/api/projects', content)
+            projectsDispatch({type: 'CREATE_SUCCESS', payload: req.data})
+        } catch (err) {
+            projectsDispatch({type: 'CREATE_ERROR', payload: err})
+        }
+    }
+
     return (
-        <ProjectsContext.Provider value={{projects, projectsDispatch}}>
+        <ProjectsContext.Provider value={{projects, createProject}}>
             {children}
         </ProjectsContext.Provider>
     )
