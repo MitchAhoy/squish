@@ -7,8 +7,13 @@ export const TasksContextProvider = ({ children }) => {
     const initState = []
 
     const tasksReducer = (state, action) => {
-        const updatedState = state.filter(task => task._id !== action.payload._id)
+        const updatedState = state.filter(task => task?._id !== action.payload?._id) || []
         switch(action.type) {
+            case 'CREATE_SUCCESS':
+                return [...state, action.payload]
+            case 'CREATE_ERROR':
+                console.error(action.payload)
+                return [...state]
             case 'FETCH_SUCCESS':
                 return [...state, ...action.payload]
             case 'FETCH_ERROR':
@@ -42,6 +47,15 @@ export const TasksContextProvider = ({ children }) => {
         initFetch()
     }, [])
 
+    const createTask = async (formData) => {
+            try {
+                const req = await axios.post('/api/tasks', formData)
+                tasksDispatch({type: 'CREATE_SUCCESS', payload: req.data})
+            } catch (err) {
+                tasksDispatch({type: 'CREATE_ERROR', payload: err})
+            }
+    }
+
     const updateTask = async (id, content) => {
         try {
             const req = await axios.patch(`/api/tasks/${id}`, content)
@@ -63,7 +77,7 @@ export const TasksContextProvider = ({ children }) => {
 
 
     return (
-        <TasksContext.Provider value={{tasks, updateTask, deleteTask}}>
+        <TasksContext.Provider value={{tasks, updateTask, deleteTask, createTask}}>
             {children}
         </TasksContext.Provider>
     )

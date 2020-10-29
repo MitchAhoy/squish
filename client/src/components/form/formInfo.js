@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const formInfo = {
     organisation: {
         title: 'Add An Organisation',
@@ -8,15 +6,7 @@ const formInfo = {
             { label: 'Add Users', inputFor: 'organisationUsers', type: 'add-users', value: '' },
         ],
         cta: 'Add Organisation',
-        submitBtn: 'Add Organisation',
-        submit: async (formData) => {
-            try {
-                const response = await axios.post('/api/create_organisation', formData)
-                return response
-            } catch (err) {
-                throw new Error(err)
-            }
-        }
+        submitBtn: 'Add Organisation'
     },
     project: {
         title: 'Create Project',
@@ -27,15 +17,7 @@ const formInfo = {
             { label: 'Invite Users', inputFor: 'projectUsers', type: 'add-users', value: '' },
         ],
         cta: 'Create Project',
-        submitBtn: 'Create Project',
-        submit: async (formData) => {
-            try {
-                const response = await axios.post('/api/projects', formData)
-                return response
-            } catch (err) {
-                throw new Error(err)
-            }
-        }
+        submitBtn: 'Create Project'
     },
     task: {
         title: 'Create Task',
@@ -50,15 +32,7 @@ const formInfo = {
 
         ],
         cta: 'Create Task',
-        submitBtn: 'Create Task',
-        submit: async (formData) => {
-            try {
-                const response = await axios.post('/api/tasks', formData)
-                return response
-            } catch (err) {
-                throw new Error(err)
-            }
-        }
+        submitBtn: 'Create Task'
     }
 
 }
