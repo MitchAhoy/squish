@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, makeStyles, Chip, Paper } from '@material-ui/core'
 import { DeleteForeverRounded as DeleteIcon, EditRounded as EditIcon } from '@material-ui/icons'
 import { TasksContext } from '../../context/tasks.context'
@@ -18,13 +18,18 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.customShadow.lg,
         maxWidth: '10rem',
         margin: '1rem',
-        padding: '0.3rem 1rem'
+        padding: '0.3rem 1rem',
+        cursor: 'pointer',
+        '&:hover': {
+            background: '#FAFAFA'
+        }
 
     },
     cardStatusContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        margin: '1rem'
     },
     link: {
         textDecoration: 'none',
@@ -52,16 +57,18 @@ const Dashboard = () => {
 
     const { tasks, deleteTask } = useContext(TasksContext)
     const { user } = useContext(UserContext)
+    const [filter, setFilter] = useState('open')
     const taskCards = ['open', 'in progress', 'completed']
     const tableHeaders = [{ label: 'Task', labelFor: 'taskName' }, { label: 'Due Date', labelFor: 'taskDueDate' }, { label: 'Assigned To', labelFor: 'taskAssignee' }, { label: 'Priority', labelFor: 'taskPriority' }, { label: 'Status', labelFor: 'taskStatus' }, { label: '', labelFor: '' }]
-    const listToRender = tasks.filter(task => task.taskAssignee === user.email && (task.taskStatus === 'open' || task.taskStatus === 'in progress'))
+    const listToRender = tasks.filter(task => task.taskAssignee === user.email && (task.taskStatus === filter || task.taskStatus === 'in progress'))
     const classes = useStyles()
+    const handleFilter = (status) => setFilter(status)
     return (
         <Container className={classes.dashboardContainer}>
             <Typography variant='h3' gutterBottom>My Tasks</Typography>
             <div className={classes.cardStatusContainer}>
                 {taskCards.map(status => (
-                    <Paper className={classes.cardContainer} key={status}>
+                    <Paper className={classes.cardContainer} key={status} onClick={() => handleFilter(status)}>
                         <Typography variant='caption'>
                             {status} tasks
                     </Typography>
@@ -98,7 +105,7 @@ const Dashboard = () => {
                     </Table>
                 </TableContainer>
             ) : (
-                    <Typography variant='h3'>You have no outstanding tasks!</Typography>
+                <Typography variant='h3'>You have no {filter} tasks.</Typography>
                 )}
 
 

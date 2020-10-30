@@ -47,9 +47,9 @@ export const OrganisationsContextProvider = ({ children }) => {
     const createOrganisation = async (formData) => {
             try {
                 const req = await axios.post('/api/create_organisation', formData)
-                return response
+                organisationsDispatch({action: 'CREATE_SUCCESS', payload: req.data})
             } catch (err) {
-                throw new Error(err)
+                organisationsDispatch({action: 'CREATE_ERROR', payload: err})
             }
     }
 

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { ProjectsContext } from '../../context/projects.context'
 import { TasksContext } from '../../context/tasks.context'
+import { OrganisationsContext } from '../../context/organisations.context'
 import { Paper, makeStyles, CssBaseline, Button, Typography } from '@material-ui/core'
 import formInfo from './formInfo'
 import FormInput from './FormInput'
@@ -21,12 +22,14 @@ const useStyles = makeStyles((theme) => ({
 const Form = ({ history, match: {params: {formFor}}}) => {
     const { createProject } = useContext(ProjectsContext)
     const { createTask } = useContext(TasksContext)
+    const { createOrganisation } = useContext(OrganisationsContext)
     const classes = useStyles()
     const { fields, cta, submitBtn } = formInfo[formFor]
 
     const submitAction = {
         project: createProject,
-        task: createTask
+        task: createTask,
+        organisation: createOrganisation
     }
 
     const submit = submitAction[formFor]
