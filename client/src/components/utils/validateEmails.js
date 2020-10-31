@@ -6,7 +6,7 @@ const validateEmails = (emails = '') => {
     .map(email => email.trim())
     .filter(email => !re.test(email))
 
-    if (invalidEmails.length) {
+    if (invalidEmails.length > 0) {
         return `These emails are invalid: ${invalidEmails}`
     }
 

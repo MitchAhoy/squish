@@ -30,4 +30,20 @@ module.exports = (app) => {
         const projects = await Project.find({projectUsers: req.user.email}).exec()
         res.send(projects)
     })
+
+    app.patch('/api/projects/:id', requireLogin, async (req, res) => {
+        try {
+            const id = req.params.id
+            const updates = req.body
+            const result = await Project.findByIdAndUpdate({_id: id}, {$set: updates}, {new: true})
+            console.log(id, updates)
+            res.send(result)
+        } catch (err) {
+            console.log(err)
+			res.status(400)
+			res.send({ error: err })
+			return
+        }
+
+    })
 }

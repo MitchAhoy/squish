@@ -1,5 +1,6 @@
   
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProjectsContext } from '../../context/projects.context'
 import {
 	CssBaseline,
 	Paper,
@@ -8,6 +9,7 @@ import {
 	Button,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import EditableText from '../utils/EditableText'
 
 const useStyles = makeStyles((theme) => ({
 	cardContainer: {
@@ -52,13 +54,15 @@ const useStyles = makeStyles((theme) => ({
 const ProjectCard = ({ project }) => {
 
     const classes = useStyles()
-    const { projectDescription, projectName, _id } = project || ''
+	const { projectDescription, projectName, _id } = project || ''
+	
+	const { updateProject } = useContext(ProjectsContext)
 
 	return (
 		<Paper className={classes.cardContainer} elevation={3}>
 			<CssBaseline />
 			<div>
-            <Typography variant='h5' gutterBottom>{projectName}</Typography>
+            <EditableText value={projectName} name='projectName' multiline={true} variant='cardTitle' id={_id} update={updateProject}/>
                 <Typography variant='body1'>{projectDescription}</Typography>
 			</div>
 			<div  className={classes.cardRight}>

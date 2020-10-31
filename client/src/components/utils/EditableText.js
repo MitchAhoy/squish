@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         border: 'none'
     },
+    cardTitle: {
+        fontSize: '1.2rem',
+        width: '100%',
+        border: 'none'
+    },
     btn: {
         margin: '0 0.2rem'
     }

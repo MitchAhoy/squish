@@ -37,6 +37,9 @@ const theme = createMuiTheme({
             'Montserrat', 
             'sans-serif'
         ]
+    },
+    gradients: {
+        nav: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(98,110,227,1) 0%, rgba(93,175,255,1) 100%)'
     }
 })
 

@@ -5,6 +5,7 @@ import { TasksContext } from '../../context/tasks.context'
 import { UserContext } from '../../context/user.context'
 import { Link } from 'react-router-dom'
 import formatDate from '../utils/formatDate'
+import AlertModual from '../utils/AlertModal'
 
 const useStyles = makeStyles((theme) => ({
     dashboardContainer: {
@@ -48,6 +49,22 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBodyCell: {
         textAlign: 'center'
+    },
+    tableActions: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+    open: {
+        background: theme.statusColour.open,
+        color: theme.palette.text.light,
+    },
+    inprogress: {
+        background: theme.statusColour.inProgress,
+        color: theme.palette.text.light,
+    },
+    completed: {
+        background: theme.statusColour.completed,
+        color: theme.palette.text.light,
     }
 }))
 
@@ -58,11 +75,14 @@ const Dashboard = () => {
     const { tasks, deleteTask } = useContext(TasksContext)
     const { user } = useContext(UserContext)
     const [filter, setFilter] = useState('open')
+    const [confirmationModual, setConfirmationModual] = useState(false)
     const taskCards = ['open', 'in progress', 'completed']
     const tableHeaders = [{ label: 'Task', labelFor: 'taskName' }, { label: 'Due Date', labelFor: 'taskDueDate' }, { label: 'Assigned To', labelFor: 'taskAssignee' }, { label: 'Priority', labelFor: 'taskPriority' }, { label: 'Status', labelFor: 'taskStatus' }, { label: '', labelFor: '' }]
-    const listToRender = tasks.filter(task => task.taskAssignee === user.email && (task.taskStatus === filter || task.taskStatus === 'in progress'))
+    const listToRender = tasks.filter(task => task.taskAssignee === user.email && task.taskStatus === filter)
     const classes = useStyles()
     const handleFilter = (status) => setFilter(status)
+    const showConfirmationModal = () => setConfirmationModual(!confirmationModual)
+
     return (
         <Container className={classes.dashboardContainer}>
             <Typography variant='h3' gutterBottom>My Tasks</Typography>
@@ -96,8 +116,15 @@ const Dashboard = () => {
                                         <TableCell className={classes.tableBodyCell}>{formatDate(taskDueDate)}</TableCell>
                                         <TableCell className={classes.tableBodyCell}>{taskAssignee}</TableCell>
                                         <TableCell className={classes.tableBodyCell}>{taskPriority}</TableCell>
-                                        <TableCell className={classes.tableBodyCell}><Chip label={taskStatus} /></TableCell>
-                                        <TableCell className={classes.tableBodyCell}><Link className={classes.linkCell} to={`/project/${taskProject}/task/${_id}`}><IconButton variant='contained' color='secondary'><EditIcon /></IconButton></Link><IconButton onClick={() => deleteTask(_id)} variant='contained' color='secondary'><DeleteIcon /></IconButton></TableCell>
+                                        <TableCell className={classes.tableBodyCell}><Chip label={taskStatus} className={`${classes[`${taskStatus.toLowerCase().replace(/ /g, '')}`]}`} /></TableCell>
+                                        <TableCell className={classes.tableBodyCell}>
+                                            <div className={classes.tableActions}>
+                                                <Link className={classes.linkCell} to={`/project/${taskProject}/task/${_id}`}>
+                                                    <IconButton variant='contained' color='secondary'><EditIcon /></IconButton>
+                                                </Link>
+                                                <AlertModual onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteTask(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModual} />
+                                            </div>
+                                        </TableCell>
                                     </TableRow>
                                 )
                             })}
@@ -105,11 +132,8 @@ const Dashboard = () => {
                     </Table>
                 </TableContainer>
             ) : (
-                <Typography variant='h3'>You have no {filter} tasks.</Typography>
+                    <Typography variant='h3'>You have no tasks {filter}.</Typography>
                 )}
-
-
-
         </Container>
     )
 }

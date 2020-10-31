@@ -1,37 +1,35 @@
 import React from 'react'
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core/Button'
+import { Button, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
-
-const AlertModal = ({ openStatus, confirmedAction }) => {
-    // use state prop to control status
-//   const [open, setOpen] = useState(false)
-  const handleClickOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+const AlertModal = ({ state, confirmedAction, Icon, title, setModalState }) => {
+  const handleClickOpen = () => setModalState(true)
+  const handleConfirmation = () => {
+    confirmedAction()
+    setModalState(false)
+  }
+  const handleClose = () => setModalState(false)
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
+      <IconButton onClick={handleClickOpen} variant='contained' color='secondary'>
+        <Icon />
+      </IconButton>
       <Dialog
-        open={open}
+        open={state}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+          <DialogContentText>
+            This can not be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Disagree
+            Cancel
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
+          <Button onClick={handleConfirmation} color="primary" autoFocus variant='contained'>
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>

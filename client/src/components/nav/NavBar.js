@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    boxShadow: 'none'
+    boxShadow: 'none',
+    background: theme.gradients.nav
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,

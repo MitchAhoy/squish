@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Toolbar, Container, makeStyles, Paper, IconButton } from '@material-ui/core'
-import { DeleteForeverRounded as DeleteIcon} from '@material-ui/icons'
+import { DeleteForeverRounded as DeleteIcon } from '@material-ui/icons'
 import StatusWidget from './StatusWidget'
 import PriorityWidget from './PriorityWidget'
 import DateWidget from './DateWidget'
 import AssigneeWidget from './AssigneeWidget'
 import EditableText from '../utils/EditableText'
+import AlertModual from '../utils/AlertModal'
 import { TasksContext } from '../../context/tasks.context'
 import { OrganisationsContext } from '../../context/organisations.context'
 
@@ -32,6 +33,9 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
 
     const [taskToRender, setTaskToRender] = useState([])
     const [organisationUsers, setorganisationUsers] = useState([])
+
+    const [confirmationModual, setConfirmationModual] = useState(false)
+    const showConfirmationModal = () => setConfirmationModual(!confirmationModual)
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)
@@ -60,7 +64,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
                             <PriorityWidget priority={taskPriority} update={updateTask} id={_id} />
                             <DateWidget taskDueDate={taskDueDate} update={updateTask} id={_id} />
                             <AssigneeWidget organisationUsers={organisationUsers} currentUser={taskAssignee} update={updateTask} id={_id} />
-                            <IconButton onClick={() => deleteTaskAndRedirect(_id)} variant='contained' color='secondary'><DeleteIcon /></IconButton>
+                            <AlertModual onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteTaskAndRedirect(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModual} />
                         </Toolbar>
                     </Paper>
                     <Container>

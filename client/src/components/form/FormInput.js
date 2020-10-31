@@ -83,7 +83,7 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 						variant='outlined'
 						onChange={handleFormInput}
 						error={incorrectEmails}
-						helperText={validateEmails(formData[inputFor])}
+						helperText={incorrectEmails && validateEmails(formData[inputFor])}
 					/>
 				)
 			case 'select-priority':
