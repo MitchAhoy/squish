@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
 		flexWrap: 'wrap',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		flexDirection: 'column'
 	},
 	card: {
 		padding: '1rem 2rem',
@@ -50,11 +51,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OrganisationsOverview = () => {
-	const { organisations, deleteOrganisation, updateOrganisation } = useContext(OrganisationsContext)
-	const [confirmationModual, setConfirmationModual] = useState(false)
-	const showConfirmationModal = () => setConfirmationModual(true)
+	const { organisations, deleteOrganisation } = useContext(OrganisationsContext)
+	const [confirmationModal, setConfirmationModal] = useState('')
 
 	const classes = useStyles()
+
+	const confirmDeleteOrganisation = (id) => {
+		deleteOrganisation(id)
+	}
 
 	return (
 		<>
@@ -62,9 +66,9 @@ const OrganisationsOverview = () => {
 			<Container>
 				<Typography variant='h2' gutterBottom>Organisations</Typography>
 				<div  className={classes.root}>
-					{organisations.map(({ organisationName, _id }) => (
+					{organisations && organisations.map(({ organisationName, _id }) => (
 						<Paper className={classes.card} elevation={3} key={_id}>
-							<AlertModal onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteOrganisation(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this organisation?' setModalState={setConfirmationModual} />
+						<AlertModal key={_id} id={_id} state={confirmationModal === _id} confirmedAction={() => confirmDeleteOrganisation(_id)} Icon={ClearIcon} title={`Are you sure you would like to delete the organisation ${organisationName}?`} setModalState={setConfirmationModal} />
 							<div>
 								<Typography variant='h5' gutterBottom>{organisationName}</Typography>
 							</div>

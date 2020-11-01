@@ -68,7 +68,6 @@ export const TasksContextProvider = ({ children }) => {
     const deleteTask = async (id) => {
         try {
             const req = await axios.delete(`/api/tasks/${id}`)
-            console.log(req)
             tasksDispatch({type: 'DELETE_SUCCESS', payload: req.data})
         } catch (err) {
             tasksDispatch({type: 'DELETE_ERROR', payload: err})

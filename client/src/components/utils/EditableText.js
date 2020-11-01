@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Button, makeStyles, IconButton, InputAdornment } from '@material-ui/core'
+import { TextField, Button, makeStyles, IconButton } from '@material-ui/core'
 import { EditRounded as EditIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({

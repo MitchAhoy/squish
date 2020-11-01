@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, makeStyles, Chip, Paper, Container } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, makeStyles, Chip, Paper, Container, Typography } from '@material-ui/core'
 import { DeleteForeverRounded as DeleteIcon, EditRounded as EditIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import { TasksContext } from '../../context/tasks.context'
@@ -58,7 +58,8 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
 
     return (
         <Container className={classes.root}>
-            <TableContainer component={Paper} className={classes.tableContainer}>
+            {listToRender.length > 0 ? (
+                <TableContainer component={Paper} className={classes.tableContainer}>
                 <Table>
                     <TableHead className={classes.tableHead}>
                         <TableRow>
@@ -81,6 +82,10 @@ const TasksTable = ({ match: { params: { projectId }} }) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            ) : (
+                <Typography variant='h3'>There are no tasks in this project. Create a task for this project and it will appear here.</Typography>
+            )}
+
         </Container>
     )
 }

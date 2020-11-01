@@ -22,26 +22,26 @@ const App = () => {
 
   return (
     <div>
-    <NavBar user={user} />
+      <NavBar user={user} />
 
       {isLoggedIn && (
         <>
 
-                <Switch>
-                    <Route exact path='/dashboard' component={Dashboard} />
-                    <Route exact path='/organisations-overview' component={OrganisationsOverview} />
-                    <Route exact path='/organisation/:organisationId' component={IndividualOrganisation} />
-                    <Route exact path='/projects-overview' component={ProjectsOverview} />
-                    <Route exact path='/project/:projectId' component={TasksTable} />
-                    <Route exact path='/project/:projectId/task/:taskId' component={IndividualTask} />
-                    <Route exact path='/create/:formFor' component={Form} />
-                </Switch>
-          
-                <CreateButton />
-           </>
+          <Switch>
+            <Route exact path='/dashboard' component={Dashboard} />
+            <Route exact path='/organisations-overview' component={OrganisationsOverview} />
+            <Route exact path='/organisation/:organisationId' component={IndividualOrganisation} />
+            <Route exact path='/projects-overview' component={ProjectsOverview} />
+            <Route exact path='/project/:projectId' component={TasksTable} />
+            <Route exact path='/project/:projectId/task/:taskId' component={IndividualTask} />
+            <Route exact path='/create/:formFor' component={Form} />
+          </Switch>
+
+          <CreateButton />
+        </>
       )}
 
-     
+
 
 
     </div>

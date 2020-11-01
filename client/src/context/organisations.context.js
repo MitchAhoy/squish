@@ -7,11 +7,10 @@ export const OrganisationsContextProvider = ({ children }) => {
     const initState = []
 
     const organisationsReducer = (state, action) => {
-        const updatedState = state.filter(org => org._id !== action.payload._id)
-        console.log(action.payload._id)
+        const updatedState = state.filter(org => org?._id !== action.payload?._id)
         switch (action.type) {
             case 'CREATE_SUCCESS':
-                return [...state, ...action.payload]
+                return [...state, action.payload]
             case 'CREATE_ERROR':
                 console.error(action.payload)
             case 'FETCH_SUCCESS':
@@ -47,10 +46,10 @@ export const OrganisationsContextProvider = ({ children }) => {
 
     const createOrganisation = async (formData) => {
             try {
-                const req = await axios.post('/api/create_organisation', formData)
-                organisationsDispatch({action: 'CREATE_SUCCESS', payload: req.data})
+                const req = await axios.post('/api/organisations', formData)
+                organisationsDispatch({type: 'CREATE_SUCCESS', payload: req.data})
             } catch (err) {
-                organisationsDispatch({action: 'CREATE_ERROR', payload: err})
+                organisationsDispatch({type: 'CREATE_ERROR', payload: err})
             }
     }
 

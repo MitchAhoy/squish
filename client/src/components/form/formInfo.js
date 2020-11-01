@@ -14,7 +14,7 @@ const formInfo = {
             { label: 'Organisation', inputFor: 'projectOrganisation', type: 'select-organisation', value: '' },
             { label: 'Project Name', inputFor: 'projectName', type: 'text', value: '' },
             { label: 'Description', inputFor: 'projectDescription', type: 'text', value: '' },
-            { label: 'Invite Users', inputFor: 'projectUsers', type: 'add-users', value: '' },
+            { label: 'Project Users', inputFor: 'projectUsers', type: 'add-users', value: '' },
         ],
         cta: 'Create Project',
         submitBtn: 'Create Project'

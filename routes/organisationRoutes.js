@@ -19,7 +19,7 @@ module.exports = (app) => {
         }
     })
 
-    app.post('/api/create_organisation', requireLogin, async (req, res) => {
+    app.post('/api/organisations', requireLogin, async (req, res) => {
         try {
             const { organisationName, organisationUsers } = req.body
             const parsedUsers = organisationUsers.split(',').filter(el => el.length > 0).map(el => el.replace(/ /g, '')).concat([req.user.email])
@@ -35,7 +35,6 @@ module.exports = (app) => {
 			res.send({ error: err })
 			return
         }
-
     })
 
     app.patch('/api/organisations/:id', requireLogin, async (req, res) => {

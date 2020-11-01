@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { OrganisationsContext } from '../../context/organisations.context'
 import EditableText from '../utils/EditableText'
 import { Container, makeStyles, List, ListItem, Button, Avatar, TextField, IconButton, Typography } from '@material-ui/core'
-import {Clear as ClearIcon} from '@material-ui/icons'
+import { Clear as ClearIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -55,7 +55,7 @@ const IndividualOrganisation = ({ match: { params: { organisationId } } }) => {
                     <EditableText className={classes.content} value={organisationName} name='organisationName' multiline={false} variant='title' id={_id} update={updateOrganisation}>{organisationName}</EditableText>
                     <List className={classes.list}>
                     {organisationUsers.length > 0 ? organisationUsers.map(user => (
-                        <>
+             
                         
                         <ListItem className={classes.listItem} key={user}>
                             <div className={classes.listEmail}>
@@ -64,7 +64,7 @@ const IndividualOrganisation = ({ match: { params: { organisationId } } }) => {
                             </div>
                             <IconButton onClick={() => editOrganisationUser(_id, user, 'remove')}><ClearIcon /></IconButton>
                         </ListItem>
-                        </>
+              
                     )) : (
                         <Typography variant='h3'>Add Users To The Organisation</Typography>
                     )}

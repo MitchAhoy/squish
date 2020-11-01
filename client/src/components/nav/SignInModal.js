@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 import { IconButton, makeStyles, Typography, Modal, Backdrop, Fade, Link as MUILink } from '@material-ui/core'
 import { Clear as ClearIcon } from '@material-ui/icons'
 

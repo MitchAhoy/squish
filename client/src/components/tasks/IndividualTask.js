@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Toolbar, Container, makeStyles, Paper, IconButton } from '@material-ui/core'
+import { Toolbar, Container, makeStyles, Paper } from '@material-ui/core'
 import { DeleteForeverRounded as DeleteIcon } from '@material-ui/icons'
 import StatusWidget from './StatusWidget'
 import PriorityWidget from './PriorityWidget'
@@ -34,8 +34,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
     const [taskToRender, setTaskToRender] = useState([])
     const [organisationUsers, setorganisationUsers] = useState([])
 
-    const [confirmationModual, setConfirmationModual] = useState(false)
-    const showConfirmationModal = () => setConfirmationModual(true)
+    const [confirmationModual, setConfirmationModual] = useState('')
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)
@@ -64,7 +63,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
                             <PriorityWidget priority={taskPriority} update={updateTask} id={_id} />
                             <DateWidget taskDueDate={taskDueDate} update={updateTask} id={_id} />
                             <AssigneeWidget organisationUsers={organisationUsers} currentUser={taskAssignee} update={updateTask} id={_id} />
-                            <AlertModual onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteTaskAndRedirect(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModual} />
+                            <AlertModual id={_id} state={confirmationModual === _id} confirmedAction={() => deleteTaskAndRedirect(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModual} />
                         </Toolbar>
                     </Paper>
                     <Container>

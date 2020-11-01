@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useState } from 'react'
+import clsx from 'clsx'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { IconButton, Button, Avatar, List, Drawer, AppBar, CssBaseline, Toolbar, ListItemIcon, Typography, Divider, ListItemText, ListItem, Link as MUILink } from '@material-ui/core'
 import {
   BugReport as BugReportIcon,

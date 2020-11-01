@@ -4,7 +4,6 @@ import { ProjectsContext } from '../../context/projects.context'
 import {
 	CssBaseline,
 	Paper,
-	Typography,
 	makeStyles,
 	Button
 } from '@material-ui/core'
@@ -17,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	cardContainer: {
 		padding: '1rem 2rem',
 		display: 'flex',
+		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignContent: 'center',
 		alignItems: 'center',
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
 		boxShadow: theme.customShadow.lg,
 		[theme.breakpoints.down('xs')]: {
-			justifyContent: 'flex-start',
+			justifyContent: 'center',
 			display: 'block'
 		},
 		position: 'relative'
@@ -71,10 +71,10 @@ const ProjectCard = ({ project }) => {
 	return (
 		<Paper className={classes.cardContainer} elevation={3}>
 			<CssBaseline />
-			<AlertModal className={classes.deleteProject} onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteProject(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this project?' setModalState={setConfirmationModual} />
+			<AlertModal className={classes.deleteProject} onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteProject(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this project?' setModalState={setConfirmationModual} position='absolute' />
 			<div>
-            <EditableText value={projectName} name='projectName' multiline={true} variant='cardTitle' id={_id} update={updateProject}/>
-                <Typography variant='body1'>{projectDescription}</Typography>
+            <EditableText value={projectName} name='projectName' multiline={true} variant='title' id={_id} update={updateProject} position/>
+            <EditableText value={projectDescription} name='projectDescription' multiline={true} variant='description' id={_id} update={updateProject}/>
 			</div>
 			<div  className={classes.cardRight}>
 				<div>

@@ -5,7 +5,7 @@ import { TasksContext } from '../../context/tasks.context'
 import { UserContext } from '../../context/user.context'
 import { Link } from 'react-router-dom'
 import formatDate from '../utils/formatDate'
-import AlertModual from '../utils/AlertModal'
+import AlertModal from '../utils/AlertModal'
 
 const useStyles = makeStyles((theme) => ({
     dashboardContainer: {
@@ -75,13 +75,13 @@ const Dashboard = () => {
     const { tasks, deleteTask } = useContext(TasksContext)
     const { user } = useContext(UserContext)
     const [filter, setFilter] = useState('open')
-    const [confirmationModual, setConfirmationModual] = useState(false)
+    const [confirmationModal, setConfirmationModal] = useState('')
     const taskCards = ['open', 'in progress', 'completed']
     const tableHeaders = [{ label: 'Task', labelFor: 'taskName' }, { label: 'Due Date', labelFor: 'taskDueDate' }, { label: 'Assigned To', labelFor: 'taskAssignee' }, { label: 'Priority', labelFor: 'taskPriority' }, { label: 'Status', labelFor: 'taskStatus' }, { label: '', labelFor: '' }]
     const listToRender = tasks.filter(task => task.taskAssignee === user.email && task.taskStatus === filter)
     const classes = useStyles()
     const handleFilter = (status) => setFilter(status)
-    const showConfirmationModal = () => setConfirmationModual(!confirmationModual)
+    const showConfirmationModal = () => setConfirmationModal(!confirmationModal)
 
     return (
         <Container className={classes.dashboardContainer}>
@@ -122,7 +122,7 @@ const Dashboard = () => {
                                                 <Link className={classes.linkCell} to={`/project/${taskProject}/task/${_id}`}>
                                                     <IconButton variant='contained' color='secondary'><EditIcon /></IconButton>
                                                 </Link>
-                                                <AlertModual onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteTask(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModual} />
+                                                <AlertModal id={_id} onClick={showConfirmationModal} state={confirmationModal === _id} confirmedAction={() => deleteTask(_id)} Icon={DeleteIcon} title='Are you sure you would like to delete this task?' setModalState={setConfirmationModal} />
                                             </div>
                                         </TableCell>
                                     </TableRow>

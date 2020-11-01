@@ -5,11 +5,8 @@ import {
 	Select,
 	FormControl,
 	MenuItem,
-	InputLabel,
-	IconButton
+	InputLabel
 } from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import { Add as AddIcon } from '@material-ui/icons'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { OrganisationsContext } from '../../context/organisations.context'
 import { ProjectsContext } from '../../context/projects.context'
@@ -151,7 +148,6 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 							)}
 							</Select>
 						</FormControl>
-						<Link to='/create/organisation' onClick={() => setFormData({})}><IconButton><AddIcon /></IconButton></Link>
 						</div>
 			)
 			case 'select-project':
@@ -183,7 +179,6 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 						)}
 						</Select>
 					</FormControl>
-					<Link to='/create/project' onClick={() => setFormData({})}><IconButton><AddIcon /></IconButton></Link>
 					</div>
 		)
 		case 'task-description':
@@ -232,7 +227,6 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 					)}
 					</Select>
 				</FormControl>
-				{!!usersToRender && <Link to={`/organisation/${filteredOrganisation._id}`}><IconButton><AddIcon /></IconButton></Link>}
 				</div>
 			)
 			default:

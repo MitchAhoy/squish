@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import { Button, makeStyles, Typography, Modal, Backdrop, Fade } from '@material-ui/core'
+import { Button, makeStyles } from '@material-ui/core'
 import SignInModal from './SignInModal'
 
 const useStyles = makeStyles((theme) => ({
