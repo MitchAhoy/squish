@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Dashboard from './components/dashboard/Dashboard'
 import { UserContext } from './context/user.context'
 import { Switch, Route } from 'react-router-dom'
+import Home from './components/home/Home'
 import NavBar from './components/nav/NavBar'
 import ProjectsOverview from './components/projects/ProjectsOverview'
 import Form from './components/form/Form'
@@ -10,19 +11,25 @@ import IndividualTask from './components/tasks/IndividualTask'
 import CreateButton from './components/utils/CreateButton'
 import OrganisationsOverview from './components/organisations/OrganisationsOverview'
 import IndividualOrganisation from './components/organisations/IndividualOrganisation'
+import { makeStyles } from '@material-ui/core'
 
-
-
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    overflowX: 'hidden'
+  }
+}))
 
 const App = () => {
+  const classes = useStyles()
 
   const { user } = useContext(UserContext)
   const isLoggedIn = Object.keys(user).length > 0
 
   return (
-    <div>
+    <div className={classes.root}>
       <NavBar user={user} />
+      <Route exact path='/' component={Home} />
 
       {isLoggedIn && (
         <>

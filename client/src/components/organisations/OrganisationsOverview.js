@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		margin: '1rem',
 		minWidth: 400,
-		maxWidth: 500,
+		maxWidth: 400,
 		boxShadow: theme.customShadow.lg,
 		[theme.breakpoints.down('xs')]: {
 			justifyContent: 'flex-start',
@@ -64,7 +64,7 @@ const OrganisationsOverview = () => {
 		<>
 
 			<Container>
-				<Typography variant='h2' gutterBottom>Organisations</Typography>
+				<Typography variant='h4' gutterBottom>Organisations</Typography>
 				<div  className={classes.root}>
 					{organisations && organisations.map(({ organisationName, _id }) => (
 						<Paper className={classes.card} elevation={3} key={_id}>

@@ -16,7 +16,7 @@ const LoginButton = () => {
 
     return (
         <div onClick={toggleModal}>
-        <Button variant='contained' color='inherit' className={classes.root}>Login</Button>
+        <Button variant='contained' color='secondary' className={classes.root}>Login</Button>
         {open && <SignInModal open={open} toggleModal={toggleModal}/>}
         </div>
     )

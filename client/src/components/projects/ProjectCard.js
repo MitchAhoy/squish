@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 		alignContent: 'center',
 		alignItems: 'center',
         margin: '1rem',
-        minWidth: 400,
-        maxWidth: 500,
+        minWidth: 200,
+        maxWidth: 300,
 		boxShadow: theme.customShadow.lg,
 		[theme.breakpoints.down('xs')]: {
 			justifyContent: 'center',
