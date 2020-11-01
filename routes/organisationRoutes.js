@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const Organisation = mongoose.model('organisation')
+const Project = mongoose.model('project')
+const Task = mongoose.model('task')
 const requireLogin = require('../middleware/requireLogin')
 
 module.exports = (app) => {
 
-    app.get('/api/fetch_organisations', requireLogin, async (req, res) => {
+    app.get('/api/organisations', requireLogin, async (req, res) => {
         try {
             const organisations = await Organisation.find({organisationUsers: req.user.email}).exec()
             res.send(organisations)
@@ -67,7 +69,6 @@ module.exports = (app) => {
                 return
             }
             res.send({})
-
         } catch (err) {
             console.log(err)
 			res.status(400)
@@ -75,4 +76,20 @@ module.exports = (app) => {
 			return
         }
     })
+
+    app.delete('/api/organisation/:id', requireLogin, async (req, res) => {
+        try {
+            const id = req.params.id
+            const deleteOrganisation = await Organisation.deleteOne({_id: id})
+            const deleteProjects = await Project.deleteMany({projectOrganisation: id})
+            const deleteTasks = await Task.deleteMany({taskOrganisation: id})
+            res.send({_id: id})
+        } catch (err) {
+            console.log(err)
+			res.status(400)
+			res.send({ error: err })
+			return
+        }
+    })
+
 }

@@ -22,6 +22,10 @@ export const ProjectsContextProvider = ({ children }) => {
                 return [...updatedState, action.payload]
             case 'UPDATE_ERROR': 
                 console.error(action.payload)
+            case 'DELETE_SUCCESS':
+                return [...updatedState]
+            case 'DELETE_ERROR': 
+                console.error(action.payload)
             default: 
                 return state
         }
@@ -59,8 +63,17 @@ export const ProjectsContextProvider = ({ children }) => {
         }
     }
 
+    const deleteProject = async (id) => {
+        try {
+            const req = await axios.delete(`/api/projects/${id}`)
+            projectsDispatch({type: 'DELETE_SUCCESS', payload: req.data})
+        } catch (err) {
+            projectsDispatch({type: 'DELETE_ERROR', payload: err})
+        }
+    }
+
     return (
-        <ProjectsContext.Provider value={{projects, createProject, updateProject}}>
+        <ProjectsContext.Provider value={{projects, createProject, updateProject, deleteProject}}>
             {children}
         </ProjectsContext.Provider>
     )

@@ -35,7 +35,7 @@ const IndividualTask = ({ history, match: { params: { taskId, projectId } } }) =
     const [organisationUsers, setorganisationUsers] = useState([])
 
     const [confirmationModual, setConfirmationModual] = useState(false)
-    const showConfirmationModal = () => setConfirmationModual(!confirmationModual)
+    const showConfirmationModal = () => setConfirmationModual(true)
 
     useEffect(() => {
         const currentTask = tasks.filter((task) => task._id === taskId)

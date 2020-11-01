@@ -121,7 +121,6 @@ const FormInput = ({fields, handleFormInput, handleDateInput, formData, setFormD
 							value={formData.taskDueDate ? formData.taskDueDate : new Date().setDate(new Date().getDate() + 1)}
 							inputVariant='outlined'
 							onChange={(date) => handleDateInput(inputFor, date)}
-							disablePast={true}
 							autoOk={true}
 						/>
 					)

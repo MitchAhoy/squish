@@ -6,17 +6,15 @@ const useStyles = makeStyles((theme) => ({
     disabled: {
         color: theme.palette.text.dark,
         borderBottom: 0,
-        "&:before": {
+        '&:before': {
             borderBottom: 0
         },
-        "&:focus": {
+        '&:focus': {
             borderBottom: 0
+        },
+        '&:hover': {
+            cursor: 'pointer'
         }
-    },
-    textFieldContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
     },
     textFieldContainer: {
         display: 'flex',

@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { OrganisationsContext } from '../../context/organisations.context'
-import { Container, makeStyles, Paper, CssBaseline, Typography, Button } from '@material-ui/core'
+import { Container, makeStyles, Paper, Typography, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { Clear as ClearIcon } from '@material-ui/icons'
+import AlertModal from '../utils/AlertModal'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -48,7 +50,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OrganisationsOverview = () => {
-	const { organisations } = useContext(OrganisationsContext)
+	const { organisations, deleteOrganisation, updateOrganisation } = useContext(OrganisationsContext)
+	const [confirmationModual, setConfirmationModual] = useState(false)
+	const showConfirmationModal = () => setConfirmationModual(true)
 
 	const classes = useStyles()
 
@@ -59,7 +63,8 @@ const OrganisationsOverview = () => {
 				<Typography variant='h2' gutterBottom>Organisations</Typography>
 				<div  className={classes.root}>
 					{organisations.map(({ organisationName, _id }) => (
-						<Paper className={classes.card} elevation={3}>
+						<Paper className={classes.card} elevation={3} key={_id}>
+							<AlertModal onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteOrganisation(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this organisation?' setModalState={setConfirmationModual} />
 							<div>
 								<Typography variant='h5' gutterBottom>{organisationName}</Typography>
 							</div>

@@ -8,9 +8,10 @@ export const OrganisationsContextProvider = ({ children }) => {
 
     const organisationsReducer = (state, action) => {
         const updatedState = state.filter(org => org._id !== action.payload._id)
+        console.log(action.payload._id)
         switch (action.type) {
             case 'CREATE_SUCCESS':
-                return [...state, action.payload]
+                return [...state, ...action.payload]
             case 'CREATE_ERROR':
                 console.error(action.payload)
             case 'FETCH_SUCCESS':
@@ -23,7 +24,7 @@ export const OrganisationsContextProvider = ({ children }) => {
                 console.error(action.payload)
                 return [...state]
             case 'DELETE_SUCCESS':
-                return [...updatedState, action.payload]
+                return [...updatedState]
             case 'DELETE_ERROR':
                 console.error(action.payload)
                 return [...state]
@@ -35,7 +36,7 @@ export const OrganisationsContextProvider = ({ children }) => {
     useEffect(() => {
         const initFetch = async () => {
             try {
-                const req = await axios.get('/api/fetch_organisations')
+                const req = await axios.get('/api/organisations')
                 organisationsDispatch({ type: 'FETCH_SUCCESS', payload: req.data })
             } catch (err) {
                 organisationsDispatch({ type: 'FETCH_ERROR', payload: err })
@@ -71,10 +72,19 @@ export const OrganisationsContextProvider = ({ children }) => {
         }
     }
 
+    const deleteOrganisation = async (id) => {
+        try {
+            const req = await axios.delete(`/api/organisation/${id}`)
+            organisationsDispatch({type: 'DELETE_SUCCESS', payload: req.data})
+        } catch (err) {
+            organisationsDispatch({type: 'DELETE_ERROR', payload: err})
+        }
+    }
+
     const [organisations, organisationsDispatch] = useReducer(organisationsReducer, initState)
 
     return (
-        <OrganisationsContext.Provider value={{ organisations, updateOrganisation, editOrganisationUser, createOrganisation }}>
+        <OrganisationsContext.Provider value={{ organisations, updateOrganisation, editOrganisationUser, createOrganisation, deleteOrganisation }}>
             {children}
         </OrganisationsContext.Provider>
     )

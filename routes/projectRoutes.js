@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Project = mongoose.model('project')
+const Task = mongoose.model('task')
 const requireLogin = require('../middleware/requireLogin')
 
 module.exports = (app) => {
@@ -16,7 +17,6 @@ module.exports = (app) => {
                 projectOrganisation
             }).save()
             res.send(project)
-            console.log(project)
             return
         } catch (err) {
             console.log(err)
@@ -36,7 +36,6 @@ module.exports = (app) => {
             const id = req.params.id
             const updates = req.body
             const result = await Project.findByIdAndUpdate({_id: id}, {$set: updates}, {new: true})
-            console.log(id, updates)
             res.send(result)
         } catch (err) {
             console.log(err)
@@ -44,6 +43,19 @@ module.exports = (app) => {
 			res.send({ error: err })
 			return
         }
+    })
 
+    app.delete('/api/projects/:id', requireLogin, async (req, res) => {
+        try {
+            const id = req.params.id
+            const deleteProject = await Project.deleteOne({_id: id}, {new: true})
+            const deleteTasks = await Task.deleteMany({taskProject: id})
+            res.send({_id: id})
+        } catch (err) {
+            console.log(err)
+			res.status(400)
+			res.send({ error: err })
+			return
+        }
     })
 }

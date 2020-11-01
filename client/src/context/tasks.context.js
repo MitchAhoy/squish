@@ -24,7 +24,7 @@ export const TasksContextProvider = ({ children }) => {
                 console.error(action.payload)
                 return [...state]
             case 'DELETE_SUCCESS':
-                return [...updatedState, action.payload]
+                return [...updatedState]
             case 'DELETE_ERROR': 
                 console.error(action.payload)
                 return [...state]            
