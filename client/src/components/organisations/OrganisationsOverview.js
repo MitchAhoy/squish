@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexWrap: 'wrap',
 		justifyContent: 'center',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		poaition: 'relative'
 	},
 	card: {
 		padding: '1rem 2rem',

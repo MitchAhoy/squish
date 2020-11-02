@@ -21,7 +21,6 @@ const Home = () => {
     return (
         <Container className={classes.root}>
                 <Typography variant='h1' className={classes.heading}>SQUISH</Typography>
-                <Typography variant='h3' gutterBottom>Squish your bugs!</Typography>
                 <Typography variant='body1' gutterBottom>Invite your team members to begin working more efficiently in a collaborative environment!</Typography>
 
             <Login />

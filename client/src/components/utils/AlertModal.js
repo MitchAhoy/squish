@@ -8,7 +8,7 @@ const AlertModal = ({ state, confirmedAction, Icon, title, setModalState, id, po
     setModalState(false)
   }
   const handleClose = () => setModalState(false)
-  const positioning = position === 'absolute' ? {position: 'absolute', top: 0, right: 0} : {position: 'relative'}
+  const positioning = position === 'absolute' ? {position: 'absolute', top: 0, left: 0} : {position: 'relative'}
 
   return (
     <div>

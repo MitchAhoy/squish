@@ -51,11 +51,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	moreBtn: {
 		textDecoration: 'none'
-	},
-	deleteProject: {
-		position: 'absolute',
-		top: 0,
-		right: 0
 	}
 }))
 
@@ -63,15 +58,15 @@ const ProjectCard = ({ project }) => {
 
     const classes = useStyles()
 	const { projectDescription, projectName, _id } = project || ''
-	const [confirmationModual, setConfirmationModual] = useState(false)
-	const showConfirmationModal = () => setConfirmationModual(true)
+
+	const [confirmationModual, setConfirmationModual] = useState('')
 	
 	const { updateProject, deleteProject } = useContext(ProjectsContext)
 
 	return (
 		<Paper className={classes.cardContainer} elevation={3}>
 			<CssBaseline />
-			<AlertModal className={classes.deleteProject} onClick={showConfirmationModal} state={confirmationModual} confirmedAction={() => deleteProject(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this project?' setModalState={setConfirmationModual} position='absolute' />
+			<AlertModal className={classes.deleteProject} id={_id} state={confirmationModual === _id} confirmedAction={() => deleteProject(_id)} Icon={ClearIcon} title='Are you sure you would like to delete this project?' setModalState={setConfirmationModual} position='absolute' />
 			<div>
             <EditableText value={projectName} name='projectName' multiline={true} variant='title' id={_id} update={updateProject} position/>
             <EditableText value={projectDescription} name='projectDescription' multiline={true} variant='description' id={_id} update={updateProject}/>

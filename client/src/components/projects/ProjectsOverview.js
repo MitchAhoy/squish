@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Projects = () => {
+const ProjectsOverview = () => {
     const classes = useStyles()
     const { projects } = useContext(ProjectsContext)
 
@@ -31,4 +31,4 @@ const Projects = () => {
     )
 }
 
-export default Projects
+export default ProjectsOverview
